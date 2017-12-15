@@ -15,6 +15,13 @@ public class MainActivity extends AppCompatActivity implements MainView {
     Button calculate;
 
     @Override
+    protected void onStart() {
+        super.onStart();
+
+        mainPresenter.attachView(this);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -26,9 +33,12 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
 
         mainPresenter = new MainPresenterImpl();
-        mainPresenter.setView(this);
+    }
 
-
+    @Override
+    protected void onStop() {
+        super.onStop();
+        mainPresenter.detachView();
     }
 
     @Override

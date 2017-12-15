@@ -6,7 +6,9 @@ package mywins.theandroiddev.com.simpleonp;
 
 public interface MainPresenter {
 
-    void setView(MainView view);
+    void attachView(MainView view);
 
     void addNumbers();
+
+    void detachView();
 }

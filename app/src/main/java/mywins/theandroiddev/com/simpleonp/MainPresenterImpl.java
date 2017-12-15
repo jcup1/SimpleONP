@@ -16,12 +16,17 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void setView(MainView view) {
+    public void attachView(MainView view) {
         this.view = view;
     }
 
     @Override
     public void addNumbers() {
         view.displayNumbers();
+    }
+
+    @Override
+    public void detachView() {
+        view = null;
     }
 }
