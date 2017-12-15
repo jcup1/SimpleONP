@@ -11,4 +11,6 @@ public interface MainPresenter {
     void addNumbers();
 
     void detachView();
+
+    void calculate(String expression);
 }

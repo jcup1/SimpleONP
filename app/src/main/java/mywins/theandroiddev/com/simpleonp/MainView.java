@@ -6,4 +6,8 @@ package mywins.theandroiddev.com.simpleonp;
 
 public interface MainView {
     void displayNumbers();
+
+    void displayExpressionNotProper();
+
+    void displayResult(String s);
 }
