@@ -8,13 +8,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener {
 
     MainPresenter mainPresenter;
 
     TextView resultIsTv, resultTv;
-    EditText insertExpression;
-    Button calculate;
+    EditText insertExpressionEt;
+    Button toInfixButton, toONPButton;
 
     @Override
     protected void onStart() {
@@ -30,17 +30,15 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
         resultIsTv = findViewById(R.id.resultIsTv);
         resultTv = findViewById(R.id.resultTv);
-        insertExpression = findViewById(R.id.insertExpressionEt);
-        calculate = findViewById(R.id.calculate);
+        insertExpressionEt = findViewById(R.id.insertExpressionEt);
+        toInfixButton = findViewById(R.id.toInfixButton);
+        toONPButton = findViewById(R.id.toONPButton);
 
         setResultInvisible();
 
-        calculate.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mainPresenter.calculate(getExpression());
-            }
-        });
+        toInfixButton.setOnClickListener(this);
+        toONPButton.setOnClickListener(this);
+
 
 
         mainPresenter = new MainPresenterImpl();
@@ -50,11 +48,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected void onStop() {
         super.onStop();
         mainPresenter.detachView();
-    }
-
-    @Override
-    public void displayNumbers() {
-
     }
 
     @Override
@@ -89,6 +82,21 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     public String getExpression() {
-        return insertExpression.getText().toString();
+        return insertExpressionEt.getText().toString();
+    }
+
+    @Override
+    public void onClick(View v) {
+        switch (v.getId()) {
+
+            case R.id.toONPButton:
+                mainPresenter.toONP(getExpression());
+                break;
+            case R.id.toInfixButton:
+                mainPresenter.toInfix(getExpression());
+                break;
+            default:
+                break;
+        }
     }
 }

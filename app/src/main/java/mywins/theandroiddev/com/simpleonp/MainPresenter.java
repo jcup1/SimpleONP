@@ -8,9 +8,9 @@ public interface MainPresenter {
 
     void attachView(MainView view);
 
-    void addNumbers();
-
     void detachView();
 
-    void calculate(String expression);
+    void toONP(String expression);
+
+    void toInfix(String expression);
 }

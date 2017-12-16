@@ -2,8 +2,6 @@ package mywins.theandroiddev.com.simpleonp;
 
 import android.text.TextUtils;
 
-import java.util.List;
-
 /**
  * Created by jakub on 15.12.17.
  */
@@ -11,11 +9,10 @@ import java.util.List;
 public class MainPresenterImpl implements MainPresenter {
 
     MainView view;
-    List<String> numbers;
-    private boolean expressionProper;
+    Converter converter;
 
     public MainPresenterImpl() {
-
+        converter = new Converter();
     }
 
     @Override
@@ -23,10 +20,7 @@ public class MainPresenterImpl implements MainPresenter {
         this.view = view;
     }
 
-    @Override
-    public void addNumbers() {
-        view.displayNumbers();
-    }
+
 
     @Override
     public void detachView() {
@@ -34,22 +28,36 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void calculate(String expression) {
-        if (isExpressionProper(expression)) {
-            view.displayResult(convertExpression(expression));
-
+    public void toONP(String infixExpression) {
+        if (isInfixExpressionProper(infixExpression)) {
+            view.displayResult(converter.toONP(infixExpression));
         } else {
             view.displayExpressionNotProper();
         }
     }
 
-    private String convertExpression(String expression) {
-        return "TODO";
+    @Override
+    public void toInfix(String ONPExpression) {
+        if (isONPExpressionProper(ONPExpression)) {
+            view.displayResult(convertONPToInfix(ONPExpression));
+        } else {
+            view.displayExpressionNotProper();
+        }
     }
 
-    public boolean isExpressionProper(String expression) {
+    public boolean isInfixExpressionProper(String expression) {
 
         return !TextUtils.isEmpty(expression);
-        //TODO else if
+        //TODO implement more cases or merge ONP and Infix methods
     }
+
+    public boolean isONPExpressionProper(String expression) {
+
+        return !TextUtils.isEmpty(expression);
+    }
+
+    private String convertONPToInfix(String ONPExpression) {
+        return "Infix";
+    }
+
 }

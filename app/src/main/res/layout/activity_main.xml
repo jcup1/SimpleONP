@@ -13,9 +13,10 @@
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
+        android:layout_marginTop="32dp"
         android:gravity="center"
         android:hint="@string/insert_expression"
+        android:maxLines="1"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"/>
@@ -31,7 +32,7 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.501"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/calculate"/>
+        app:layout_constraintTop_toBottomOf="@+id/toONPButton"/>
 
     <TextView
         android:id="@+id/resultTv"
@@ -51,15 +52,30 @@
         tools:text="1000"/>
 
     <Button
-        android:id="@+id/calculate"
+        android:id="@+id/toONPButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="@string/calculate"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text="To ONP"
+        app:layout_constraintEnd_toStartOf="@+id/toInfixButton"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/insertExpressionEt"/>
+
+    <Button
+        android:id="@+id/toInfixButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:text="To Infix"
+        app:layout_constraintBottom_toBottomOf="@+id/toONPButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/toONPButton"
+        app:layout_constraintTop_toBottomOf="@+id/insertExpressionEt"
+        app:layout_constraintVertical_bias="0.0"/>
 
 </android.support.constraint.ConstraintLayout>
