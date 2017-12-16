@@ -1,5 +1,8 @@
 package mywins.theandroiddev.com.simpleonp;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -8,13 +11,20 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener {
+import static android.view.View.GONE;
+import static android.view.View.INVISIBLE;
+import static android.view.View.OnClickListener;
+import static android.view.View.VISIBLE;
+import static mywins.theandroiddev.com.simpleonp.R.string.expression_empty;
+import static mywins.theandroiddev.com.simpleonp.R.string.result_copied;
+
+public class MainActivity extends AppCompatActivity implements MainView, OnClickListener {
 
     MainPresenter mainPresenter;
 
     TextView resultIsTv, resultTv;
     EditText insertExpressionEt;
-    Button toInfixButton, toONPButton;
+    Button toInfixButton, toONPButton, copyResultButton;
 
     @Override
     protected void onStart() {
@@ -33,13 +43,13 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         insertExpressionEt = findViewById(R.id.insertExpressionEt);
         toInfixButton = findViewById(R.id.toInfixButton);
         toONPButton = findViewById(R.id.toONPButton);
+        copyResultButton = findViewById(R.id.copyResultButton);
 
         setResultInvisible();
 
         toInfixButton.setOnClickListener(this);
         toONPButton.setOnClickListener(this);
-
-
+        copyResultButton.setOnClickListener(this);
 
         mainPresenter = new MainPresenterImpl();
     }
@@ -54,7 +64,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     public void displayExpressionNotProper() {
         setResultInvisible();
         clearResult();
-        showMessage("Expression not proper");
+        showMessage(getString(expression_empty));
     }
 
     @Override
@@ -64,13 +74,15 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     public void setResultVisible() {
-        resultTv.setVisibility(View.VISIBLE);
-        resultIsTv.setVisibility(View.VISIBLE);
+        resultTv.setVisibility(VISIBLE);
+        resultIsTv.setVisibility(VISIBLE);
+        copyResultButton.setVisibility(VISIBLE);
     }
 
     public void setResultInvisible() {
-        resultTv.setVisibility(View.INVISIBLE);
-        resultIsTv.setVisibility(View.INVISIBLE);
+        resultTv.setVisibility(INVISIBLE);
+        resultIsTv.setVisibility(INVISIBLE);
+        copyResultButton.setVisibility(GONE);
     }
 
     public void clearResult() {
@@ -95,8 +107,24 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
             case R.id.toInfixButton:
                 mainPresenter.toInfix(getExpression());
                 break;
+            case R.id.copyResultButton:
+                copyResult(getResult());
+                showMessage(getString(result_copied));
+                break;
             default:
                 break;
         }
+    }
+
+    private void copyResult(String expression) {
+        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+        ClipData clip = ClipData.newPlainText("result expression", expression);
+        if (clipboard != null) {
+            clipboard.setPrimaryClip(clip);
+        }
+    }
+
+    public String getResult() {
+        return resultTv.getText().toString();
     }
 }

@@ -8,10 +8,10 @@ import android.text.TextUtils;
 
 public class MainPresenterImpl implements MainPresenter {
 
-    MainView view;
-    Converter converter;
+    private MainView view;
+    private Converter converter;
 
-    public MainPresenterImpl() {
+    MainPresenterImpl() {
         converter = new Converter();
     }
 
@@ -20,8 +20,6 @@ public class MainPresenterImpl implements MainPresenter {
         this.view = view;
     }
 
-
-
     @Override
     public void detachView() {
         view = null;
@@ -29,7 +27,7 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void toONP(String infixExpression) {
-        if (isInfixExpressionProper(infixExpression)) {
+        if (!isExpressionEmpty(infixExpression)) {
             view.displayResult(converter.toONP(infixExpression));
         } else {
             view.displayExpressionNotProper();
@@ -38,26 +36,16 @@ public class MainPresenterImpl implements MainPresenter {
 
     @Override
     public void toInfix(String ONPExpression) {
-        if (isONPExpressionProper(ONPExpression)) {
-            view.displayResult(convertONPToInfix(ONPExpression));
+        if (!isExpressionEmpty(ONPExpression)) {
+            view.displayResult(converter.toInfix(ONPExpression));
         } else {
             view.displayExpressionNotProper();
         }
     }
 
-    public boolean isInfixExpressionProper(String expression) {
 
-        return !TextUtils.isEmpty(expression);
-        //TODO implement more cases or merge ONP and Infix methods
-    }
-
-    public boolean isONPExpressionProper(String expression) {
-
-        return !TextUtils.isEmpty(expression);
-    }
-
-    private String convertONPToInfix(String ONPExpression) {
-        return "Infix";
+    private boolean isExpressionEmpty(String s) {
+        return TextUtils.isEmpty(s);
     }
 
 }

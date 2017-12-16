@@ -13,4 +13,5 @@ public interface MainPresenter {
     void toONP(String expression);
 
     void toInfix(String expression);
+
 }

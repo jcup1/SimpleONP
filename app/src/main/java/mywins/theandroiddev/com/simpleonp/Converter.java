@@ -1,5 +1,7 @@
 package mywins.theandroiddev.com.simpleonp;
 
+import android.text.TextUtils;
+
 import java.util.Stack;
 
 /**
@@ -7,6 +9,12 @@ import java.util.Stack;
  */
 
 class Converter {
+
+    public String toInfix(String postfix) {
+
+        //TODO conversion
+        return "Postfix";
+    }
 
     public String toONP(String s) {
 
@@ -20,6 +28,7 @@ class Converter {
             } else if (operator(s.charAt(i))) {
                 //to make space between numbers
                 res.append(' ');
+
                 while (!stack.isEmpty() && !openBrackets(s.charAt(i)) &&
                         (getWeight(s.charAt(i)) <= getWeight(stack.peek()))) {
                     res.append(stack.peek());
@@ -36,7 +45,9 @@ class Converter {
                     res.append(stack.peek());
                     stack.pop();
                 }
-                stack.pop();
+                //to avoid EmptyStackException when user input strange char
+                if (!stack.isEmpty())
+                    stack.pop();
             }
             i++;
         }
@@ -46,7 +57,8 @@ class Converter {
             res.append(stack.peek());
             stack.pop();
         }
-        return String.valueOf(res);
+
+        return TextUtils.isEmpty(res) ? "Letters are not allowed" : String.valueOf(res);
     }
 
     private boolean operator(char o) {

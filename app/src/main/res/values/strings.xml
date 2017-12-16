@@ -4,4 +4,8 @@
     <string name="result">result is</string>
     <string name="calculate">calculate</string>
     <string name="to_ONP_switch">to ONP</string>
+    <string name="expression_empty">"Expression is empty"</string>
+    <string name="copy_result">Copy Result</string>
+    <string name="result_copied">Copied</string>
+    <string name="letters_not_allowed">Letters are not allowed</string>
 </resources>
