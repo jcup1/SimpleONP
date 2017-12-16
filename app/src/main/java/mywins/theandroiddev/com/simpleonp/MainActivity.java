@@ -25,6 +25,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnClick
     TextView resultIsTv, resultTv;
     EditText insertExpressionEt;
     Button toInfixButton, toONPButton, copyResultButton;
+    boolean resultShown = false;
 
     @Override
     protected void onStart() {
@@ -45,13 +46,28 @@ public class MainActivity extends AppCompatActivity implements MainView, OnClick
         toONPButton = findViewById(R.id.toONPButton);
         copyResultButton = findViewById(R.id.copyResultButton);
 
-        setResultInvisible();
 
         toInfixButton.setOnClickListener(this);
         toONPButton.setOnClickListener(this);
         copyResultButton.setOnClickListener(this);
 
         mainPresenter = new MainPresenterImpl();
+
+        if (savedInstanceState != null) {
+            resultShown = savedInstanceState.getBoolean("RESULT_SHOWN");
+            if (resultShown) {
+                setResultVisible();
+                resultTv.setText(savedInstanceState.getString("RESULT"));
+            } else setResultInvisible();
+        }
+
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putBoolean("RESULT_SHOWN", resultShown);
+        outState.putString("RESULT", getResult());
     }
 
     @Override
@@ -77,15 +93,18 @@ public class MainActivity extends AppCompatActivity implements MainView, OnClick
         resultTv.setVisibility(VISIBLE);
         resultIsTv.setVisibility(VISIBLE);
         copyResultButton.setVisibility(VISIBLE);
+        resultShown = true;
     }
 
     public void setResultInvisible() {
         resultTv.setVisibility(INVISIBLE);
         resultIsTv.setVisibility(INVISIBLE);
         copyResultButton.setVisibility(GONE);
+        resultShown = false;
     }
 
     public void clearResult() {
+        resultIsTv.setText("");
         resultTv.setText("");
     }
 
