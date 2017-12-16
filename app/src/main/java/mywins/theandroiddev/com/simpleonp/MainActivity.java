@@ -20,6 +20,10 @@ import static mywins.theandroiddev.com.simpleonp.R.string.result_copied;
 
 public class MainActivity extends AppCompatActivity implements MainView, OnClickListener {
 
+    public static final String RESULT_SHOWN_KEY = "RESULT_SHOWN";
+    public static final String RESULT_KEY = "RESULT";
+    public static final String RESULT_EXPRESSION_LABEL = "RESULT_EXPRESSION";
+
     MainPresenter mainPresenter;
 
     TextView resultIsTv, resultTv;
@@ -31,7 +35,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnClick
     protected void onStart() {
         super.onStart();
 
-        mainPresenter.attachView(this);
+        mainPresenter.onAttachView(this);
     }
 
     @Override
@@ -46,7 +50,6 @@ public class MainActivity extends AppCompatActivity implements MainView, OnClick
         toONPButton = findViewById(R.id.toONPButton);
         copyResultButton = findViewById(R.id.copyResultButton);
 
-
         toInfixButton.setOnClickListener(this);
         toONPButton.setOnClickListener(this);
         copyResultButton.setOnClickListener(this);
@@ -54,10 +57,10 @@ public class MainActivity extends AppCompatActivity implements MainView, OnClick
         mainPresenter = new MainPresenterImpl();
 
         if (savedInstanceState != null) {
-            resultShown = savedInstanceState.getBoolean("RESULT_SHOWN");
+            resultShown = savedInstanceState.getBoolean(RESULT_SHOWN_KEY);
             if (resultShown) {
                 setResultVisible();
-                resultTv.setText(savedInstanceState.getString("RESULT"));
+                resultTv.setText(savedInstanceState.getString(RESULT_KEY));
             } else setResultInvisible();
         }
 
@@ -73,11 +76,11 @@ public class MainActivity extends AppCompatActivity implements MainView, OnClick
     @Override
     protected void onStop() {
         super.onStop();
-        mainPresenter.detachView();
+        mainPresenter.onDetachView();
     }
 
     @Override
-    public void displayExpressionNotProper() {
+    public void displayExpressionEmptyMessage() {
         setResultInvisible();
         clearResult();
         showMessage(getString(expression_empty));
@@ -112,7 +115,7 @@ public class MainActivity extends AppCompatActivity implements MainView, OnClick
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
 
-    public String getExpression() {
+    public String getInsertedExpression() {
         return insertExpressionEt.getText().toString();
     }
 
@@ -121,13 +124,13 @@ public class MainActivity extends AppCompatActivity implements MainView, OnClick
         switch (v.getId()) {
 
             case R.id.toONPButton:
-                mainPresenter.toONP(getExpression());
+                mainPresenter.convertToONP(getInsertedExpression());
                 break;
             case R.id.toInfixButton:
-                mainPresenter.toInfix(getExpression());
+                mainPresenter.convertToInfix(getInsertedExpression());
                 break;
             case R.id.copyResultButton:
-                copyResult(getResult());
+                copyResultToClipboard(getResult());
                 showMessage(getString(result_copied));
                 break;
             default:
@@ -135,9 +138,9 @@ public class MainActivity extends AppCompatActivity implements MainView, OnClick
         }
     }
 
-    private void copyResult(String expression) {
+    private void copyResultToClipboard(String expression) {
         ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText("result expression", expression);
+        ClipData clip = ClipData.newPlainText(RESULT_EXPRESSION_LABEL, expression);
         if (clipboard != null) {
             clipboard.setPrimaryClip(clip);
         }

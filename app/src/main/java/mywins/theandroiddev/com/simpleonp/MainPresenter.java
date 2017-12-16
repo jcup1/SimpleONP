@@ -6,12 +6,12 @@ package mywins.theandroiddev.com.simpleonp;
 
 public interface MainPresenter {
 
-    void attachView(MainView view);
+    void onAttachView(MainView view);
 
-    void detachView();
+    void onDetachView();
 
-    void toONP(String expression);
+    void convertToONP(String expression);
 
-    void toInfix(String expression);
+    void convertToInfix(String expression);
 
 }

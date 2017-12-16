@@ -6,7 +6,7 @@ package mywins.theandroiddev.com.simpleonp;
 
 public interface MainView {
 
-    void displayExpressionNotProper();
+    void displayExpressionEmptyMessage();
 
     void displayResult(String s);
 }

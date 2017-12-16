@@ -16,33 +16,32 @@ public class MainPresenterImpl implements MainPresenter {
     }
 
     @Override
-    public void attachView(MainView view) {
+    public void onAttachView(MainView view) {
         this.view = view;
     }
 
     @Override
-    public void detachView() {
+    public void onDetachView() {
         view = null;
     }
 
     @Override
-    public void toONP(String infixExpression) {
+    public void convertToONP(String infixExpression) {
         if (!isExpressionEmpty(infixExpression)) {
             view.displayResult(converter.toONP(infixExpression));
         } else {
-            view.displayExpressionNotProper();
+            view.displayExpressionEmptyMessage();
         }
     }
 
     @Override
-    public void toInfix(String ONPExpression) {
+    public void convertToInfix(String ONPExpression) {
         if (!isExpressionEmpty(ONPExpression)) {
             view.displayResult(converter.toInfix(ONPExpression));
         } else {
-            view.displayExpressionNotProper();
+            view.displayExpressionEmptyMessage();
         }
     }
-
 
     private boolean isExpressionEmpty(String s) {
         return TextUtils.isEmpty(s);

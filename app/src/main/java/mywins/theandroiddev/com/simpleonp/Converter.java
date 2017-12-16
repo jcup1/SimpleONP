@@ -10,13 +10,13 @@ import java.util.Stack;
 
 class Converter {
 
-    public String toInfix(String postfix) {
+    String toInfix(String s) {
 
         //TODO conversion
         return "Postfix";
     }
 
-    public String toONP(String s) {
+    String toONP(String s) {
 
         StringBuilder res = new StringBuilder();
         Stack<Character> stack = new Stack<>();
