@@ -16,5 +16,5 @@ public interface MainPresenter {
 
     void calculate(String insertedExpression);
 
-    void onClick(int id, Character c, String s, String insertedExpression);
+    void onClick(int id, Character c, String insertedExpression);
 }

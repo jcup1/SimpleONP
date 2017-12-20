@@ -17,4 +17,6 @@ public interface MainView {
     void displayMessage(String s);
 
     void displayInput(String s);
+
+    void displayUnsupportedMessage();
 }

@@ -130,7 +130,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     @Override
     public void displayEqualsResult(String s) {
-        resultTv.setText("");
+        clearResult();
         inputTv.setText(s);
     }
 
@@ -145,6 +145,11 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     @Override
+    public void displayUnsupportedMessage() {
+        Toast.makeText(this, getString(R.string.unsupported_message), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
     public void displayMessage(String s) {
         Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
     }
@@ -153,10 +158,12 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     public void onClick(View view) {
 
         Button b = (Button) view;
-        Character c = b.getText().toString().charAt(0);
+        mainPresenter.onClick(view.getId(), getButtonChar(b), getInsertedExpression());
 
-        mainPresenter.onClick(view.getId(), c, b.getText().toString(), getInsertedExpression());
+    }
 
+    private Character getButtonChar(Button b) {
+        return b.getText().toString().charAt(0);
     }
 
 }

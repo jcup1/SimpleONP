@@ -10,7 +10,7 @@ import java.util.Stack;
 
 public class Converter {
 
-
+    //not used
     public String toInfix(String s) {
 
         return "Infix";
@@ -65,7 +65,7 @@ public class Converter {
         else return String.valueOf(res);
     }
 
-    private boolean operator(char o) {
+    public boolean operator(char o) {
         return (o == '+') || (o == '-') || (o == '/') || (o == '*');
     }
 

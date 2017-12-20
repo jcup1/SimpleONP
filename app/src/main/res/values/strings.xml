@@ -28,5 +28,6 @@
     <string name="btn_8_text">8</string>
     <string name="btn_7_text">7</string>
     <string name="tv_result_text">0</string>
+    <string name="unsupported_message">Unsupported</string>
 
 </resources>
