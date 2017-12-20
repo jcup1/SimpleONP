@@ -87,11 +87,17 @@ public class MainPresenterImpl implements MainPresenter {
                     return;
                 }
 
+
                 if (converter.operator(c) && converter.operator(lastChar)) {
                     insertedExpression = removeLastChar(insertedExpression);
 
                 }
             }
+
+            if (insertedExpression.length() == 0) {
+                if (c.equals('/') || c.equals('*') || c.equals('+')) return;
+            }
+
             view.displayInput(insertedExpression + c);
             convertToONP(insertedExpression + c);
             return;
