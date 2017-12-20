@@ -10,5 +10,23 @@
     <string name="letters_not_allowed">Letters are not allowed</string>
     <string name="to_onp">To ONP</string>
     <string name="to_infix">To Infix</string>
+    <string name="btn_del_text">DEL</string>
+    <string name="btn_divide_text">÷</string>
+    <string name="btn_multiply_text">×</string>
+    <string name="btn_minus_text">-</string>
+    <string name="btn_plus_text">+</string>
+    <string name="btn_equals_text">=</string>
+    <string name="btn_0_text">0</string>
+    <string name="btn_dot_text">.</string>
+    <string name="btn_3_text">3</string>
+    <string name="btn_2_text">2</string>
+    <string name="btn_1_text">1</string>
+    <string name="btn_6_text">6</string>
+    <string name="btn_5_text">5</string>
+    <string name="btn_4_text">4</string>
+    <string name="btn_9_text">9</string>
+    <string name="btn_8_text">8</string>
+    <string name="btn_7_text">7</string>
+    <string name="tv_result_text">0</string>
 
 </resources>

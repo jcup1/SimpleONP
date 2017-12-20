@@ -1,6 +1,8 @@
-package mywins.theandroiddev.com.simpleonp;
+package mywins.theandroiddev.com.simpleonp.main;
 
 import android.text.TextUtils;
+
+import mywins.theandroiddev.com.simpleonp.Converter;
 
 /**
  * Created by jakub on 15.12.17.

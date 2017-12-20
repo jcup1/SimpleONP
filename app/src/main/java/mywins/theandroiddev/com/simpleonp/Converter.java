@@ -8,18 +8,18 @@ import java.util.Stack;
  * Created by jakub on 16.12.17.
  */
 
-class Converter {
+public class Converter {
 
-    String toInfix(String s) {
 
-        //TODO conversion
-        return "Postfix";
+    public String toInfix(String s) {
+
+        return "Infix";
     }
 
-    String toONP(String s) {
+    public String toONP(String s) {
 
-        StringBuilder res = new StringBuilder();
         Stack<Character> stack = new Stack<>();
+        StringBuilder res = new StringBuilder();
 
         int i = 0;
         while (i < s.length()) {
