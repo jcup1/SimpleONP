@@ -5,46 +5,77 @@ import android.content.ClipboardManager;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import mywins.theandroiddev.com.simpleonp.R;
 
-import static android.view.View.GONE;
 import static android.view.View.INVISIBLE;
 import static android.view.View.VISIBLE;
 import static mywins.theandroiddev.com.simpleonp.R.string.expression_empty;
 
-public class MainActivity extends AppCompatActivity implements MainView {
+public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener {
 
     public static final String RESULT_SHOWN_KEY = "RESULT_SHOWN";
     public static final String RESULT_KEY = "RESULT";
     public static final String RESULT_EXPRESSION_LABEL = "RESULT_EXPRESSION";
 
-    MainPresenter mainPresenter;
     boolean resultShown = false;
 
-    TextView resultIsTv, resultTv;
-    EditText insertExpressionEt;
-    Button toInfixButton, toONPButton, copyResultButton;
+    MainPresenter mainPresenter;
+
+    TextView inputTv, resultTv;
+
+    Button btn7, btn8, btn9, btn4, btn5, btn6, btn1, btn2, btn3, btnDot, btn0, btnEquals;
+    Button btnDel, btnDivide, btnMultiply, btnMinus, btnPlus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-//        resultIsTv = findViewById(R.id.resultIsTv);
-//        resultTv = findViewById(R.id.resultTv);
-//        insertExpressionEt = findViewById(R.id.insertExpressionEt);
-//        toInfixButton = findViewById(R.id.toInfixButton);
-//        toONPButton = findViewById(R.id.toONPButton);
-//        copyResultButton = findViewById(R.id.copyResultButton);
+        inputTv = findViewById(R.id.inputTv);
+        resultTv = findViewById(R.id.resultTv);
 
-//        toInfixButton.setOnClickListener(this);
-//        toONPButton.setOnClickListener(this);
-//        copyResultButton.setOnClickListener(this);
+        btn7 = findViewById(R.id.btn_7);
+        btn8 = findViewById(R.id.btn_8);
+        btn9 = findViewById(R.id.btn_9);
+        btn4 = findViewById(R.id.btn_4);
+        btn5 = findViewById(R.id.btn_5);
+        btn6 = findViewById(R.id.btn_6);
+        btn1 = findViewById(R.id.btn_1);
+        btn2 = findViewById(R.id.btn_2);
+        btn3 = findViewById(R.id.btn_3);
+        btnDot = findViewById(R.id.btn_dot);
+        btn0 = findViewById(R.id.btn_0);
+        btnEquals = findViewById(R.id.btn_equals);
+
+        btnDel = findViewById(R.id.btn_del);
+        btnDivide = findViewById(R.id.btn_divide);
+        btnMultiply = findViewById(R.id.btn_multiply);
+        btnMinus = findViewById(R.id.btn_minus);
+        btnPlus = findViewById(R.id.btn_plus);
+
+        btn7.setOnClickListener(this);
+        btn8.setOnClickListener(this);
+        btn9.setOnClickListener(this);
+        btn4.setOnClickListener(this);
+        btn5.setOnClickListener(this);
+        btn6.setOnClickListener(this);
+        btn1.setOnClickListener(this);
+        btn2.setOnClickListener(this);
+        btn3.setOnClickListener(this);
+        btnDot.setOnClickListener(this);
+        btn0.setOnClickListener(this);
+        btnEquals.setOnClickListener(this);
+
+        btnDel.setOnClickListener(this);
+        btnDivide.setOnClickListener(this);
+        btnMultiply.setOnClickListener(this);
+        btnMinus.setOnClickListener(this);
+        btnPlus.setOnClickListener(this);
 
         mainPresenter = new MainPresenterImpl();
 
@@ -77,7 +108,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
 //        outState.putString(RESULT_KEY, getResult());
     }
 
-    //https://play.google.com/store/apps/details?id=com.google.android.calculator
     @Override
     protected void onStop() {
         super.onStop();
@@ -86,15 +116,11 @@ public class MainActivity extends AppCompatActivity implements MainView {
 
     public void setResultVisible() {
         resultTv.setVisibility(VISIBLE);
-        resultIsTv.setVisibility(VISIBLE);
-        copyResultButton.setVisibility(VISIBLE);
         resultShown = true;
     }
 
     public void setResultInvisible() {
         resultTv.setVisibility(INVISIBLE);
-        resultIsTv.setVisibility(INVISIBLE);
-        copyResultButton.setVisibility(GONE);
         resultShown = false;
     }
 
@@ -119,7 +145,6 @@ public class MainActivity extends AppCompatActivity implements MainView {
 //    }
 
     public void clearResult() {
-        resultIsTv.setText("");
         resultTv.setText("");
     }
 
@@ -128,7 +153,7 @@ public class MainActivity extends AppCompatActivity implements MainView {
     }
 
     public String getInsertedExpression() {
-        return insertExpressionEt.getText().toString();
+        return inputTv.getText().toString();
     }
 
     public String getResult() {
@@ -154,5 +179,14 @@ public class MainActivity extends AppCompatActivity implements MainView {
     public void displayResult(String s) {
         setResultVisible();
         resultTv.setText(s);
+    }
+
+    @Override
+    public void onClick(View view) {
+        Button b = (Button) view;
+        switch (view.getId()) {
+            default:
+                inputTv.append(b.getText() + " ");
+        }
     }
 }
