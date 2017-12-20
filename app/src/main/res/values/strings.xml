@@ -11,8 +11,8 @@
     <string name="to_onp">To ONP</string>
     <string name="to_infix">To Infix</string>
     <string name="btn_del_text">DEL</string>
-    <string name="btn_divide_text">÷</string>
-    <string name="btn_multiply_text">×</string>
+    <string name="btn_divide_text">/</string>
+    <string name="btn_multiply_text">*</string>
     <string name="btn_minus_text">-</string>
     <string name="btn_plus_text">+</string>
     <string name="btn_equals_text">=</string>
@@ -29,5 +29,6 @@
     <string name="btn_7_text">7</string>
     <string name="tv_result_text">0</string>
     <string name="unsupported_message">Unsupported</string>
+    <string name="btn_clr_text">CLR</string>
 
 </resources>

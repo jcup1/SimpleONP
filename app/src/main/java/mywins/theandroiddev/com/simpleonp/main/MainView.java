@@ -19,4 +19,10 @@ public interface MainView {
     void displayInput(String s);
 
     void displayUnsupportedMessage();
+
+    void clearInput();
+
+    void displayButtonDEL();
+
+    void displayButtonCLR();
 }

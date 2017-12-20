@@ -9,17 +9,18 @@ import android.widget.Toast;
 
 import mywins.theandroiddev.com.simpleonp.R;
 
-import static mywins.theandroiddev.com.simpleonp.R.string.expression_empty;
-
 public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener {
 
 
     public static final String INPUT_KEY = "INPUT_STATE";
     public static final String RESULT_KEY = "RESULT_STATE";
+    public static final String RESULT_SHOWN = "RESULT_SHOWN_STATE";
 
     MainPresenter mainPresenter;
 
     TextView inputTv, resultTv;
+
+    //Switches CLR and DEL
 
     Button btn7, btn8, btn9, btn4, btn5, btn6, btn1, btn2, btn3, btnDot, btn0, btnEquals;
     Button btnDel, btnDivide, btnMultiply, btnMinus, btnPlus;
@@ -88,6 +89,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         if (savedInstanceState != null) {
             inputTv.setText(savedInstanceState.getString(INPUT_KEY));
             resultTv.setText(savedInstanceState.getString(RESULT_KEY));
+            mainPresenter.setResultShown(savedInstanceState.getBoolean(RESULT_SHOWN));
 
         }
     }
@@ -97,6 +99,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         super.onSaveInstanceState(outState);
         outState.putString(INPUT_KEY, getInsertedExpression());
         outState.putString(RESULT_KEY, getResultONPExpression());
+        outState.putBoolean(RESULT_SHOWN, getResultShown());
     }
 
     @Override
@@ -120,7 +123,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     @Override
     public void displayExpressionEmptyMessage() {
         clearResult();
-        displayMessage(getString(expression_empty));
     }
 
     @Override
@@ -132,6 +134,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     public void displayEqualsResult(String s) {
         clearResult();
         inputTv.setText(s);
+
     }
 
     @Override
@@ -147,6 +150,23 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     @Override
     public void displayUnsupportedMessage() {
         Toast.makeText(this, getString(R.string.unsupported_message), Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void clearInput() {
+        inputTv.setText("");
+    }
+
+    @Override
+    public void displayButtonDEL() {
+        btnDel.setText(getString(R.string.btn_del_text));
+
+    }
+
+    @Override
+    public void displayButtonCLR() {
+        btnDel.setText(R.string.btn_clr_text);
+
     }
 
     @Override
@@ -166,4 +186,7 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         return b.getText().toString().charAt(0);
     }
 
+    public boolean getResultShown() {
+        return mainPresenter.getResultShown();
+    }
 }

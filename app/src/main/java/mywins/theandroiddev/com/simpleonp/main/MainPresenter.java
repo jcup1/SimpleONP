@@ -17,4 +17,8 @@ public interface MainPresenter {
     void calculate(String insertedExpression);
 
     void onClick(int id, Character c, String insertedExpression);
+
+    boolean getResultShown();
+
+    void setResultShown(boolean aBoolean);
 }
