@@ -12,12 +12,10 @@ import mywins.theandroiddev.com.simpleonp.R;
 import static mywins.theandroiddev.com.simpleonp.R.string.expression_empty;
 
 public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener {
-//
-//    public static final String RESULT_SHOWN_KEY = "RESULT_SHOWN";
-//    public static final String RESULT_KEY = "RESULT";
-//    public static final String RESULT_EXPRESSION_LABEL = "RESULT_EXPRESSION";
-//
-//    boolean resultShown = false;
+
+
+    public static final String INPUT_KEY = "INPUT_STATE";
+    public static final String RESULT_KEY = "RESULT_STATE";
 
     MainPresenter mainPresenter;
 
@@ -87,20 +85,18 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-//        if (savedInstanceState != null) {
-//            resultShown = savedInstanceState.getBoolean(RESULT_SHOWN_KEY);
-//            if (resultShown) {
-//                setResultVisible();
-//                resultTv.setText(savedInstanceState.getString(RESULT_KEY));
-//            } else setResultInvisible();
-//        }
+        if (savedInstanceState != null) {
+            inputTv.setText(savedInstanceState.getString(INPUT_KEY));
+            resultTv.setText(savedInstanceState.getString(RESULT_KEY));
+
+        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-//        outState.putBoolean(RESULT_SHOWN_KEY, resultShown);
-//        outState.putString(RESULT_KEY, getResult());
+        outState.putString(INPUT_KEY, getInsertedExpression());
+        outState.putString(RESULT_KEY, getResultONPExpression());
     }
 
     @Override
@@ -108,36 +104,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         super.onStop();
         mainPresenter.onDetachView();
     }
-
-//    public void setResultVisible() {
-//        resultTv.setVisibility(VISIBLE);
-//        resultShown = true;
-//    }
-//
-//    public void setResultInvisible() {
-//        resultTv.setVisibility(INVISIBLE);
-//        resultShown = false;
-//    }
-
-
-//    @Override
-//    public void onClick(View v) {
-//        switch (v.getId()) {
-//
-//            case R.id.toONPButton:
-//                mainPresenter.convertToONP(getInsertedExpression());
-//                break;
-//            case R.id.toInfixButton:
-//                mainPresenter.convertToInfix(getInsertedExpression());
-//                break;
-//            case R.id.copyResultButton:
-//                copyResultToClipboard(getResult());
-//                showMessage(getString(result_copied));
-//                break;
-//            default:
-//                break;
-//        }
-//    }
 
     public void clearResult() {
         resultTv.setText("");
@@ -147,17 +113,9 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         return inputTv.getText().toString();
     }
 
-//    public String getResult() {
-//        return resultTv.getText().toString();
-//    }
-
-//    private void copyResultToClipboard(String expression) {
-//        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-//        ClipData clip = ClipData.newPlainText(RESULT_EXPRESSION_LABEL, expression);
-//        if (clipboard != null) {
-//            clipboard.setPrimaryClip(clip);
-//        }
-//    }
+    public String getResultONPExpression() {
+        return resultTv.getText().toString();
+    }
 
     @Override
     public void displayExpressionEmptyMessage() {
@@ -200,6 +158,5 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         mainPresenter.onClick(view.getId(), c, b.getText().toString(), getInsertedExpression());
 
     }
-
 
 }
