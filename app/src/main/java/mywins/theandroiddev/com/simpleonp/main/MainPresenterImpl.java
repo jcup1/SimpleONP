@@ -51,9 +51,12 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void calculate(String insertedExpression) {
         if (!isExpressionEmpty(insertedExpression)) {
-            resultShown = true;
-            view.displayEqualsResult(converter.evaluate(insertedExpression));
-            view.displayButtonCLR();
+            if (!converter.operator(insertedExpression.charAt(insertedExpression.length() - 1))) {
+                resultShown = true;
+                double result = converter.evaluate(insertedExpression);
+                view.displayEqualsResult(String.valueOf(((long) result)));
+                view.displayButtonCLR();
+            }
         } else {
             view.displayExpressionEmptyMessage();
         }
@@ -77,8 +80,21 @@ public class MainPresenterImpl implements MainPresenter {
 
         if (Character.isDigit(c) || converter.operator(c)) {
 
-            view.appendInput(String.valueOf(c));
-            convertToONP(insertedExpression);
+            if (insertedExpression.length() > 0) {
+                char lastChar = insertedExpression.charAt(insertedExpression.length() - 1);
+
+                if (c.equals('0') && lastChar == '/') {
+                    return;
+                }
+
+                if (converter.operator(c) && converter.operator(lastChar)) {
+                    insertedExpression = removeLastChar(insertedExpression);
+
+                }
+            }
+            view.displayInput(insertedExpression + c);
+            convertToONP(insertedExpression + c);
+            return;
         }
 
         switch (id) {

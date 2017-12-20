@@ -138,11 +138,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
     }
 
     @Override
-    public void appendInput(String s) {
-        inputTv.append(s);
-    }
-
-    @Override
     public void displayInput(String s) {
         inputTv.setText(s);
     }
@@ -169,10 +164,6 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
 
     }
 
-    @Override
-    public void displayMessage(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-    }
 
     @Override
     public void onClick(View view) {

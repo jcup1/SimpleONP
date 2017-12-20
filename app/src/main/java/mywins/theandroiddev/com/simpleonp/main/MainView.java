@@ -12,10 +12,6 @@ public interface MainView {
 
     void displayEqualsResult(String s);
 
-    void appendInput(String s);
-
-    void displayMessage(String s);
-
     void displayInput(String s);
 
     void displayUnsupportedMessage();

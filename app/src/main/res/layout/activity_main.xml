@@ -17,7 +17,8 @@
         android:gravity="bottom|end"
         android:maxLines="3"
         android:padding="8dp"
-        android:textSize="36sp"
+        android:textColor="@color/primary_text"
+        android:textSize="56sp"
         />
 
     <TextView
@@ -28,6 +29,7 @@
         android:gravity="center_vertical|end"
         android:maxLines="1"
         android:padding="8dp"
+        android:textColor="@color/secondary_text"
         android:textSize="32sp"/>
 
     <android.support.constraint.ConstraintLayout

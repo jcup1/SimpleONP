@@ -100,8 +100,8 @@ public class Converter {
         }
     }
 
-    public String evaluate(final String str) {
-        return String.valueOf(new Object() {
+    public double evaluate(final String str) {
+        return new Object() {
             int position = -1;
             int character;
 
@@ -110,7 +110,7 @@ public class Converter {
                 else character = -1;
             }
 
-            boolean operate(int c) {
+            boolean operate(double c) {
                 //handle white spaces
                 while (character == ' ') nextChar();
                 if (character == c) {
@@ -120,14 +120,14 @@ public class Converter {
                 return false;
             }
 
-            int parse() {
+            double parse() {
                 nextChar();
                 return parseExpression();
             }
 
 
-            int parseExpression() {
-                int x = parseTerm();
+            double parseExpression() {
+                double x = parseTerm();
                 while (true) {
                     if (operate('+')) {
                         x += parseTerm();
@@ -139,8 +139,8 @@ public class Converter {
 
             //I could use other multiply and divide symbols and convert them
             //but I don't think that it's really important in this project
-            int parseTerm() {
-                int x = parseFactor();
+            double parseTerm() {
+                double x = parseFactor();
                 while (true) {
                     if (operate('*')) {
                         x *= parseFactor();
@@ -150,27 +150,27 @@ public class Converter {
                 }
             }
 
-            int parseFactor() {
+            double parseFactor() {
                 if (operate('+')) return parseFactor();
                 if (operate('-')) return -parseFactor();
 
-                int x = 0;
+                double x = 0;
                 int startPos = this.position;
                 if (operate('(')) {
                     x = parseExpression();
                     operate(')');
                 } else if (Character.isDigit(character)) {
                     while (Character.isDigit(character)) nextChar();
-                    x = Integer.parseInt(str.substring(startPos, this.position));
+                    x = Double.parseDouble(str.substring(startPos, this.position));
                 } else if (Character.isLetter(character)) {
                     while (Character.isLetter(character)) nextChar();
                     x = parseFactor();
                 }
                 //no double and '.' operator
-                if (operate('^')) x = (int) Math.pow(x, parseFactor());
+                if (operate('^')) x = Math.pow(x, parseFactor());
 
                 return x;
             }
-        }.parse());
+        }.parse();
     }
 }
