@@ -20,6 +20,7 @@ public class Converter {
 
         Stack<Character> stack = new Stack<>();
         StringBuilder res = new StringBuilder();
+        int operatorCount = 0;
 
         int i = 0;
         while (i < s.length()) {
@@ -27,6 +28,7 @@ public class Converter {
                 res.append(s.charAt(i));
             } else if (operator(s.charAt(i))) {
                 //to make space between numbers
+                operatorCount++;
                 res.append(' ');
 
                 while (!stack.isEmpty() && !openBrackets(s.charAt(i)) &&
@@ -58,7 +60,9 @@ public class Converter {
             stack.pop();
         }
 
-        return TextUtils.isEmpty(res) ? "Letters are not allowed" : String.valueOf(res);
+        if (TextUtils.isEmpty(res)) return "Letters are not allowed";
+        else if (operatorCount == 0) return "";
+        else return String.valueOf(res);
     }
 
     private boolean operator(char o) {
@@ -96,4 +100,77 @@ public class Converter {
         }
     }
 
+    public String evaluate(final String str) {
+        return String.valueOf(new Object() {
+            int position = -1;
+            int character;
+
+            void nextChar() {
+                if (++position < str.length()) character = str.charAt(position);
+                else character = -1;
+            }
+
+            boolean operate(int c) {
+                //handle white spaces
+                while (character == ' ') nextChar();
+                if (character == c) {
+                    nextChar();
+                    return true;
+                }
+                return false;
+            }
+
+            int parse() {
+                nextChar();
+                return parseExpression();
+            }
+
+
+            int parseExpression() {
+                int x = parseTerm();
+                while (true) {
+                    if (operate('+')) {
+                        x += parseTerm();
+                    } else if (operate('-')) {
+                        x -= parseTerm();
+                    } else return x;
+                }
+            }
+
+            //I could use other multiply and divide symbols and convert them
+            //but I don't think that it's really important in this project
+            int parseTerm() {
+                int x = parseFactor();
+                while (true) {
+                    if (operate('*')) {
+                        x *= parseFactor();
+                    } else if (operate('/')) {
+                        x /= parseFactor();
+                    } else return x;
+                }
+            }
+
+            int parseFactor() {
+                if (operate('+')) return parseFactor();
+                if (operate('-')) return -parseFactor();
+
+                int x = 0;
+                int startPos = this.position;
+                if (operate('(')) {
+                    x = parseExpression();
+                    operate(')');
+                } else if (Character.isDigit(character)) {
+                    while (Character.isDigit(character)) nextChar();
+                    x = Integer.parseInt(str.substring(startPos, this.position));
+                } else if (Character.isLetter(character)) {
+                    while (Character.isLetter(character)) nextChar();
+                    x = parseFactor();
+                }
+                //no double and '.' operator
+                if (operate('^')) x = (int) Math.pow(x, parseFactor());
+
+                return x;
+            }
+        }.parse());
+    }
 }

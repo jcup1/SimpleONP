@@ -14,4 +14,7 @@ public interface MainPresenter {
 
     void convertToInfix(String expression);
 
+    void calculate(String insertedExpression);
+
+    void onClick(int id, Character c, String s, String insertedExpression);
 }

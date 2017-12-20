@@ -8,5 +8,13 @@ public interface MainView {
 
     void displayExpressionEmptyMessage();
 
-    void displayResult(String s);
+    void displayONPResult(String s);
+
+    void displayEqualsResult(String s);
+
+    void appendInput(String s);
+
+    void displayMessage(String s);
+
+    void displayInput(String s);
 }

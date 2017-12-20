@@ -1,8 +1,5 @@
 package mywins.theandroiddev.com.simpleonp.main;
 
-import android.content.ClipData;
-import android.content.ClipboardManager;
-import android.content.Context;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
@@ -12,17 +9,15 @@ import android.widget.Toast;
 
 import mywins.theandroiddev.com.simpleonp.R;
 
-import static android.view.View.INVISIBLE;
-import static android.view.View.VISIBLE;
 import static mywins.theandroiddev.com.simpleonp.R.string.expression_empty;
 
 public class MainActivity extends AppCompatActivity implements MainView, View.OnClickListener {
-
-    public static final String RESULT_SHOWN_KEY = "RESULT_SHOWN";
-    public static final String RESULT_KEY = "RESULT";
-    public static final String RESULT_EXPRESSION_LABEL = "RESULT_EXPRESSION";
-
-    boolean resultShown = false;
+//
+//    public static final String RESULT_SHOWN_KEY = "RESULT_SHOWN";
+//    public static final String RESULT_KEY = "RESULT";
+//    public static final String RESULT_EXPRESSION_LABEL = "RESULT_EXPRESSION";
+//
+//    boolean resultShown = false;
 
     MainPresenter mainPresenter;
 
@@ -114,15 +109,15 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         mainPresenter.onDetachView();
     }
 
-    public void setResultVisible() {
-        resultTv.setVisibility(VISIBLE);
-        resultShown = true;
-    }
-
-    public void setResultInvisible() {
-        resultTv.setVisibility(INVISIBLE);
-        resultShown = false;
-    }
+//    public void setResultVisible() {
+//        resultTv.setVisibility(VISIBLE);
+//        resultShown = true;
+//    }
+//
+//    public void setResultInvisible() {
+//        resultTv.setVisibility(INVISIBLE);
+//        resultShown = false;
+//    }
 
 
 //    @Override
@@ -148,45 +143,63 @@ public class MainActivity extends AppCompatActivity implements MainView, View.On
         resultTv.setText("");
     }
 
-    private void showMessage(String s) {
-        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
-    }
-
     public String getInsertedExpression() {
         return inputTv.getText().toString();
     }
 
-    public String getResult() {
-        return resultTv.getText().toString();
-    }
+//    public String getResult() {
+//        return resultTv.getText().toString();
+//    }
 
-    private void copyResultToClipboard(String expression) {
-        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-        ClipData clip = ClipData.newPlainText(RESULT_EXPRESSION_LABEL, expression);
-        if (clipboard != null) {
-            clipboard.setPrimaryClip(clip);
-        }
-    }
+//    private void copyResultToClipboard(String expression) {
+//        ClipboardManager clipboard = (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
+//        ClipData clip = ClipData.newPlainText(RESULT_EXPRESSION_LABEL, expression);
+//        if (clipboard != null) {
+//            clipboard.setPrimaryClip(clip);
+//        }
+//    }
 
     @Override
     public void displayExpressionEmptyMessage() {
-        setResultInvisible();
         clearResult();
-        showMessage(getString(expression_empty));
+        displayMessage(getString(expression_empty));
     }
 
     @Override
-    public void displayResult(String s) {
-        setResultVisible();
+    public void displayONPResult(String s) {
         resultTv.setText(s);
     }
 
     @Override
-    public void onClick(View view) {
-        Button b = (Button) view;
-        switch (view.getId()) {
-            default:
-                inputTv.append(b.getText() + " ");
-        }
+    public void displayEqualsResult(String s) {
+        resultTv.setText("");
+        inputTv.setText(s);
     }
+
+    @Override
+    public void appendInput(String s) {
+        inputTv.append(s);
+    }
+
+    @Override
+    public void displayInput(String s) {
+        inputTv.setText(s);
+    }
+
+    @Override
+    public void displayMessage(String s) {
+        Toast.makeText(this, s, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        Button b = (Button) view;
+        Character c = b.getText().toString().charAt(0);
+
+        mainPresenter.onClick(view.getId(), c, b.getText().toString(), getInsertedExpression());
+
+    }
+
+
 }
