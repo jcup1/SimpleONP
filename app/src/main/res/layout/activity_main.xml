@@ -12,8 +12,8 @@
     <TextView
         android:id="@+id/input"
         android:layout_width="match_parent"
-        android:layout_height="228dp"
-        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:layout_weight="2.5"
         android:gravity="bottom|end"
         android:maxLines="1"
         android:padding="8dp"
@@ -21,25 +21,27 @@
         />
 
     <TextView
+        android:id="@+id/result"
         android:layout_width="match_parent"
-        android:layout_height="266dp"
-        android:layout_weight="2"
+        android:layout_height="match_parent"
+        android:layout_weight="3"
         android:gravity="center_vertical|end"
         android:maxLines="1"
         android:padding="8dp"
-        android:text="@string/tv_result_text"
         android:textSize="32sp"/>
 
     <android.support.constraint.ConstraintLayout
+        android:id="@+id/mainConstraint"
         android:layout_width="match_parent"
-        android:layout_height="366dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1.4"
         android:orientation="horizontal">
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout3"
             android:layout_width="0dp"
-            android:layout_height="366dp"
-            android:background="@color/colorPrimary"
+            android:layout_height="0dp"
+            android:background="@color/colorPrimaryDark"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/constraintLayout2"
             app:layout_constraintStart_toStartOf="parent"
@@ -194,11 +196,11 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout2"
-            android:layout_width="80dp"
+            android:layout_width="64dp"
             android:layout_height="0dp"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintEnd_toStartOf="@+id/slide"
             app:layout_constraintTop_toTopOf="parent">
 
             <Button
@@ -257,6 +259,17 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/button24"/>
+        </android.support.constraint.ConstraintLayout>
+
+        <android.support.constraint.ConstraintLayout
+            android:id="@+id/slide"
+            android:layout_width="24dp"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
         </android.support.constraint.ConstraintLayout>
 
 

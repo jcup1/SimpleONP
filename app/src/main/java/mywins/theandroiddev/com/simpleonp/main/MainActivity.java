@@ -61,20 +61,20 @@ public class MainActivity extends AppCompatActivity implements MainView {
     protected void onRestoreInstanceState(Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        if (savedInstanceState != null) {
-            resultShown = savedInstanceState.getBoolean(RESULT_SHOWN_KEY);
-            if (resultShown) {
-                setResultVisible();
-                resultTv.setText(savedInstanceState.getString(RESULT_KEY));
-            } else setResultInvisible();
-        }
+//        if (savedInstanceState != null) {
+//            resultShown = savedInstanceState.getBoolean(RESULT_SHOWN_KEY);
+//            if (resultShown) {
+//                setResultVisible();
+//                resultTv.setText(savedInstanceState.getString(RESULT_KEY));
+//            } else setResultInvisible();
+//        }
     }
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
-        outState.putBoolean(RESULT_SHOWN_KEY, resultShown);
-        outState.putString(RESULT_KEY, getResult());
+//        outState.putBoolean(RESULT_SHOWN_KEY, resultShown);
+//        outState.putString(RESULT_KEY, getResult());
     }
 
     //https://play.google.com/store/apps/details?id=com.google.android.calculator
