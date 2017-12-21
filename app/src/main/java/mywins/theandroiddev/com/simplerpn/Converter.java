@@ -10,38 +10,34 @@ import java.util.Stack;
 
 public class Converter {
 
-    private Stack<Character> stack;
-    private StringBuilder result;
-    private int operatorCount;
-
     public String toRpn(String expression) {
 
-        stack = new Stack<>();
-        result = new StringBuilder();
-        operatorCount = 0;
+        Stack<Character> stack = new Stack<>();
+        StringBuilder result = new StringBuilder();
+        int operatorCount = 0;
 
         int i = 0;
         while (i < expression.length()) {
             if (Character.isDigit(expression.charAt(i))) {
                 result.append(expression.charAt(i));
-            } else if (operator(expression.charAt(i))) {
+            } else if (isOperator(expression.charAt(i))) {
                 //to make space between numbers
                 operatorCount++;
                 result.append(' ');
 
-                while (!stack.isEmpty() && !openBrackets(expression.charAt(i)) &&
+                while (!stack.isEmpty() && !isOpenBracket(expression.charAt(i)) &&
                         (getWeight(expression.charAt(i)) <= getWeight(stack.peek()))) {
                     result.append(stack.peek());
                     stack.pop();
                 }//while
                 stack.push(expression.charAt(i));
-                //to make space between operator nad number(only when RPN operators are not at the end of the line.)
+                //to make space between isOperator nad number(only when RPN operators are not at the end of the line.)
                 result.append(' ');
             }//else if
-            else if (openBrackets(expression.charAt(i))) {
+            else if (isOpenBracket(expression.charAt(i))) {
                 stack.push(expression.charAt(i));
-            } else if (closeBrackets(expression.charAt(i))) {
-                while (!stack.isEmpty() && !openBrackets(stack.peek())) {
+            } else if (isClosedBracket(expression.charAt(i))) {
+                while (!stack.isEmpty() && !isOpenBracket(stack.peek())) {
                     result.append(stack.peek());
                     stack.pop();
                 }
@@ -63,15 +59,15 @@ public class Converter {
         else return String.valueOf(result);
     }
 
-    public boolean operator(char operator) {
+    public boolean isOperator(char operator) {
         return (operator == '+') || (operator == '-') || (operator == '/') || (operator == '*');
     }
 
-    private boolean openBrackets(char operator) {
+    private boolean isOpenBracket(char operator) {
         return (operator == '{') || (operator == '[') || (operator == '(');
     }
 
-    private boolean closeBrackets(char operator) {
+    private boolean isClosedBracket(char operator) {
         return (operator == '}') || (operator == ']') || (operator == ')');
     }
 
@@ -169,7 +165,7 @@ public class Converter {
                     while (Character.isLetter(character)) nextChar();
                     number = parseFactor();
                 }
-                //no double and '.' operator
+                //no double and '.' isOperator
                 if (operate('^')) number = Math.pow(number, parseFactor());
 
                 return number;

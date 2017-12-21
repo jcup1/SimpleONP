@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="text_size_input_portrait">56sp</dimen>
+    <dimen name="text_size_input_portrait">52sp</dimen>
     <dimen name="text_size_result_portrait">32sp</dimen>
     <dimen name="text_size_input_land">40sp</dimen>
     <dimen name="text_size_result_land">24sp</dimen>

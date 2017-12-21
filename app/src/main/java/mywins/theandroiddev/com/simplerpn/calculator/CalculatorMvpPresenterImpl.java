@@ -13,11 +13,11 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
 
     private CalculatorMvpView view;
     private Converter converter;
-    private boolean resultShown = false;
-
+    private boolean resultShown;
 
     CalculatorMvpPresenterImpl() {
         converter = new Converter();
+        resultShown = false;
     }
 
     @Override
@@ -32,10 +32,11 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
 
     @Override
     public void convertToRpn(String infixExpression) {
-        if (!isExpressionEmpty(infixExpression)) {
-            view.displayRpnResult(converter.toRpn(infixExpression));
-        } else {
+        if (isExpressionEmpty(infixExpression)) {
             view.displayExpressionEmptyMessage();
+
+        } else {
+            view.displayRpnResult(converter.toRpn(infixExpression));
         }
     }
 
@@ -43,15 +44,16 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     public void calculate(String insertedExpression) {
         double result;
 
-        if (!isExpressionEmpty(insertedExpression)) {
-            if (!converter.operator(insertedExpression.charAt(insertedExpression.length() - 1))) {
+        if (isExpressionEmpty(insertedExpression)) {
+            view.displayExpressionEmptyMessage();
+
+        } else {
+            if (!converter.isOperator(insertedExpression.charAt(insertedExpression.length() - 1))) {
                 resultShown = true;
                 result = converter.evaluate(insertedExpression);
                 view.displayEqualsResult(String.valueOf(((long) result)));
                 view.displayClearButton();
             }
-        } else {
-            view.displayExpressionEmptyMessage();
         }
 
 
@@ -67,13 +69,13 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
                 view.displayDeleteButton();
                 setResultShown(false);
             }
-            if (converter.operator(c)) {
+            if (converter.isOperator(c)) {
                 view.displayDeleteButton();
                 setResultShown(false);
             }
         }
 
-        if (Character.isDigit(c) || converter.operator(c)) {
+        if (Character.isDigit(c) || converter.isOperator(c)) {
             char lastChar;
             if (insertedExpression.length() > 0) {
                 lastChar = insertedExpression.charAt(insertedExpression.length() - 1);
@@ -83,7 +85,7 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
                     return;
                 }
 
-                if (converter.operator(c) && converter.operator(lastChar)) {
+                if (converter.isOperator(c) && converter.isOperator(lastChar)) {
                     insertedExpression = removeLastChar(insertedExpression);
                 }
             }
