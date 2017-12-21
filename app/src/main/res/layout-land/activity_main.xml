@@ -16,9 +16,9 @@
         android:layout_weight="3"
         android:gravity="top|end"
         android:maxLines="1"
-        android:padding="8dp"
+        android:padding="@dimen/input_padding_land"
         android:textColor="@color/primary_text"
-        android:textSize="40sp"
+        android:textSize="@dimen/input_text_size_land"
         />
 
     <TextView
@@ -28,9 +28,9 @@
         android:layout_weight="3.2"
         android:gravity="end"
         android:maxLines="1"
-        android:padding="4dp"
+        android:padding="@dimen/result_padding_land"
         android:textColor="@color/secondary_text"
-        android:textSize="24sp"/>
+        android:textSize="@dimen/result_text_size_land"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/mainConstraint"
@@ -196,7 +196,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout2"
-            android:layout_width="128dp"
+            android:layout_width="@dimen/operator_bar_width_land"
             android:layout_height="0dp"
             android:background="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -224,7 +224,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="@string/btn_del_text"
-                android:textSize="16sp"
+                android:textSize="@dimen/del_btn_text_size_land"
                 app:layout_constraintBottom_toTopOf="@+id/btn_multiply"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"

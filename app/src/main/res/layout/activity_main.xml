@@ -16,9 +16,9 @@
         android:layout_weight="2.5"
         android:gravity="bottom|end"
         android:maxLines="3"
-        android:padding="8dp"
+        android:padding="@dimen/input_padding_portrait"
         android:textColor="@color/primary_text"
-        android:textSize="56sp"
+        android:textSize="@dimen/input_text_size_portrait"
         />
 
     <TextView
@@ -28,9 +28,9 @@
         android:layout_weight="3"
         android:gravity="center_vertical|end"
         android:maxLines="1"
-        android:padding="8dp"
+        android:padding="@dimen/result_padding_portrait"
         android:textColor="@color/secondary_text"
-        android:textSize="32sp"/>
+        android:textSize="@dimen/result_text_size_portrait"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/mainConstraint"
@@ -198,7 +198,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/constraintLayout2"
-            android:layout_width="64dp"
+            android:layout_width="@dimen/operator_bar_width_portrait"
             android:layout_height="0dp"
             android:background="@color/colorPrimary"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -211,7 +211,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="@string/btn_del_text"
-                android:textSize="16sp"
+                android:textSize="@dimen/delete_btn_text_size_portrait"
                 app:layout_constraintBottom_toTopOf="@+id/btn_divide"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
@@ -265,7 +265,7 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/slide"
-            android:layout_width="24dp"
+            android:layout_width="@dimen/function_bar_width_portrait"
             android:layout_height="match_parent"
             android:background="@color/colorAccent"
             app:layout_constraintBottom_toBottomOf="parent"

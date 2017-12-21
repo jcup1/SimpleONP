@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="input_text_size_portrait">56sp</dimen>
+    <dimen name="result_text_size_portrait">32sp</dimen>
+    <dimen name="operator_bar_width_portrait">64dp</dimen>
+    <dimen name="delete_btn_text_size_portrait">16sp</dimen>
+    <dimen name="function_bar_width_portrait">24dp</dimen>
+    <dimen name="input_padding_portrait">8dp</dimen>
+    <dimen name="result_padding_portrait">8dp</dimen>
+
+    <dimen name="input_padding_land">8dp</dimen>
+    <dimen name="result_padding_land">4dp</dimen>
+    <dimen name="input_text_size_land">40sp</dimen>
+    <dimen name="result_text_size_land">24sp</dimen>
+    <dimen name="operator_bar_width_land">128dp</dimen>
+    <dimen name="del_btn_text_size_land">16sp</dimen>
+</resources>

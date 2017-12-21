@@ -67,15 +67,17 @@ public class MainPresenterImpl implements MainPresenter {
     @Override
     public void onClick(int id, Character c, String insertedExpression) {
 
-        if (resultShown && Character.isDigit(c)) {
-            view.clearInput();
-            view.displayButtonDEL();
-            setResultShown(false);
-        }
+        if (resultShown) {
 
-        if (resultShown && converter.operator(c)) {
-            view.displayButtonDEL();
-            setResultShown(false);
+            if (Character.isDigit(c)) {
+                view.clearInput();
+                view.displayButtonDEL();
+                setResultShown(false);
+            }
+            if (converter.operator(c)) {
+                view.displayButtonDEL();
+                setResultShown(false);
+            }
         }
 
         if (Character.isDigit(c) || converter.operator(c)) {
@@ -83,14 +85,13 @@ public class MainPresenterImpl implements MainPresenter {
             if (insertedExpression.length() > 0) {
                 char lastChar = insertedExpression.charAt(insertedExpression.length() - 1);
 
+                //don't divide by 0
                 if (c.equals('0') && lastChar == '/') {
                     return;
                 }
 
-
                 if (converter.operator(c) && converter.operator(lastChar)) {
                     insertedExpression = removeLastChar(insertedExpression);
-
                 }
             }
 
@@ -126,8 +127,9 @@ public class MainPresenterImpl implements MainPresenter {
     private void delete(String insertedExpression) {
         if (resultShown) {
             view.clearInput();
-            setResultShown(false);
             view.displayButtonDEL();
+            setResultShown(false);
+
         } else {
             view.displayInput(removeLastChar(insertedExpression));
             convertToONP(insertedExpression);
