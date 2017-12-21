@@ -2,10 +2,10 @@
 <resources>
 
 
-    <style name="CustomButton" parent="Widget.AppCompat.Button">
-        <item name="android:textColor">@color/colorWhite</item>
+    <style name="CalculatorButton" parent="Widget.AppCompat.Button">
+        <item name="android:textColor">@color/color_white</item>
         <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
-        <item name="android:textSize">@dimen/button_text_size</item>
+        <item name="android:textSize">@dimen/text_size_calculator_button</item>
         <item name="android:fontFamily">sans-serif-light</item>
     </style>
 

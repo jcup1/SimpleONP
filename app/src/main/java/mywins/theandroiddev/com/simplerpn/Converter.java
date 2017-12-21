@@ -1,4 +1,4 @@
-package mywins.theandroiddev.com.simpleonp;
+package mywins.theandroiddev.com.simplerpn;
 
 import android.text.TextUtils;
 
@@ -10,41 +10,39 @@ import java.util.Stack;
 
 public class Converter {
 
-    //not used
-    public String toInfix(String s) {
+    private Stack<Character> stack;
+    private StringBuilder result;
+    private int operatorCount;
 
-        return "Infix";
-    }
+    public String toRpn(String expression) {
 
-    public String toONP(String s) {
-
-        Stack<Character> stack = new Stack<>();
-        StringBuilder res = new StringBuilder();
-        int operatorCount = 0;
+        stack = new Stack<>();
+        result = new StringBuilder();
+        operatorCount = 0;
 
         int i = 0;
-        while (i < s.length()) {
-            if (Character.isDigit(s.charAt(i))) {
-                res.append(s.charAt(i));
-            } else if (operator(s.charAt(i))) {
+        while (i < expression.length()) {
+            if (Character.isDigit(expression.charAt(i))) {
+                result.append(expression.charAt(i));
+            } else if (operator(expression.charAt(i))) {
                 //to make space between numbers
                 operatorCount++;
-                res.append(' ');
+                result.append(' ');
 
-                while (!stack.isEmpty() && !openBrackets(s.charAt(i)) &&
-                        (getWeight(s.charAt(i)) <= getWeight(stack.peek()))) {
-                    res.append(stack.peek());
+                while (!stack.isEmpty() && !openBrackets(expression.charAt(i)) &&
+                        (getWeight(expression.charAt(i)) <= getWeight(stack.peek()))) {
+                    result.append(stack.peek());
                     stack.pop();
                 }//while
-                stack.push(s.charAt(i));
-                //to make space between operator nad number(only when ONP operators are not at the end of the line.)
-                res.append(' ');
+                stack.push(expression.charAt(i));
+                //to make space between operator nad number(only when RPN operators are not at the end of the line.)
+                result.append(' ');
             }//else if
-            else if (openBrackets(s.charAt(i))) {
-                stack.push(s.charAt(i));
-            } else if (closeBrackets(s.charAt(i))) {
+            else if (openBrackets(expression.charAt(i))) {
+                stack.push(expression.charAt(i));
+            } else if (closeBrackets(expression.charAt(i))) {
                 while (!stack.isEmpty() && !openBrackets(stack.peek())) {
-                    res.append(stack.peek());
+                    result.append(stack.peek());
                     stack.pop();
                 }
                 //to avoid EmptyStackException when user input strange char
@@ -56,25 +54,25 @@ public class Converter {
 
         //get operators
         while (!stack.isEmpty()) {
-            res.append(stack.peek());
+            result.append(stack.peek());
             stack.pop();
         }
 
-        if (TextUtils.isEmpty(res)) return "Letters are not allowed";
+        if (TextUtils.isEmpty(result)) return "Letters are not allowed";
         else if (operatorCount == 0) return "";
-        else return String.valueOf(res);
+        else return String.valueOf(result);
     }
 
-    public boolean operator(char o) {
-        return (o == '+') || (o == '-') || (o == '/') || (o == '*');
+    public boolean operator(char operator) {
+        return (operator == '+') || (operator == '-') || (operator == '/') || (operator == '*');
     }
 
-    private boolean openBrackets(char o) {
-        return (o == '{') || (o == '[') || (o == '(');
+    private boolean openBrackets(char operator) {
+        return (operator == '{') || (operator == '[') || (operator == '(');
     }
 
-    private boolean closeBrackets(char o) {
-        return (o == '}') || (o == ']') || (o == ')');
+    private boolean closeBrackets(char operator) {
+        return (operator == '}') || (operator == ']') || (operator == ')');
     }
 
     private int getWeight(char operator) {
@@ -100,20 +98,20 @@ public class Converter {
         }
     }
 
-    public double evaluate(final String str) {
+    public double evaluate(final String expression) {
         return new Object() {
             int position = -1;
             int character;
 
             void nextChar() {
-                if (++position < str.length()) character = str.charAt(position);
+                if (++position < expression.length()) character = expression.charAt(position);
                 else character = -1;
             }
 
-            boolean operate(double c) {
+            boolean operate(double operationCharacter) {
                 //handle white spaces
                 while (character == ' ') nextChar();
-                if (character == c) {
+                if (character == operationCharacter) {
                     nextChar();
                     return true;
                 }
@@ -127,26 +125,30 @@ public class Converter {
 
 
             double parseExpression() {
-                double x = parseTerm();
+                double number;
+
+                number = parseTerm();
                 while (true) {
                     if (operate('+')) {
-                        x += parseTerm();
+                        number += parseTerm();
                     } else if (operate('-')) {
-                        x -= parseTerm();
-                    } else return x;
+                        number -= parseTerm();
+                    } else return number;
                 }
             }
 
             //I could use other multiply and divide symbols and convert them
             //but I don't think that it's really important in this project
             double parseTerm() {
-                double x = parseFactor();
+                double number;
+
+                number = parseFactor();
                 while (true) {
                     if (operate('*')) {
-                        x *= parseFactor();
+                        number *= parseFactor();
                     } else if (operate('/')) {
-                        x /= parseFactor();
-                    } else return x;
+                        number /= parseFactor();
+                    } else return number;
                 }
             }
 
@@ -154,22 +156,23 @@ public class Converter {
                 if (operate('+')) return parseFactor();
                 if (operate('-')) return -parseFactor();
 
-                double x = 0;
+                double number;
+                number = 0;
                 int startPos = this.position;
                 if (operate('(')) {
-                    x = parseExpression();
+                    number = parseExpression();
                     operate(')');
                 } else if (Character.isDigit(character)) {
                     while (Character.isDigit(character)) nextChar();
-                    x = Double.parseDouble(str.substring(startPos, this.position));
+                    number = Double.parseDouble(expression.substring(startPos, this.position));
                 } else if (Character.isLetter(character)) {
                     while (Character.isLetter(character)) nextChar();
-                    x = parseFactor();
+                    number = parseFactor();
                 }
                 //no double and '.' operator
-                if (operate('^')) x = Math.pow(x, parseFactor());
+                if (operate('^')) number = Math.pow(number, parseFactor());
 
-                return x;
+                return number;
             }
         }.parse();
     }
