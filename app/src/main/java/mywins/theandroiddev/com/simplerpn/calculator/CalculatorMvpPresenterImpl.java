@@ -50,7 +50,7 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
         if (isLastCharacterNotOperator(insertedExpression)) {
             setResultShown(true);
             result = evaluator.evaluate(insertedExpression);
-            view.displayEqualsResult(String.valueOf(((long) result)));
+            view.displayEqualsResult(String.valueOf((Math.round(result))));
             view.displayClearButton();
         }
 
