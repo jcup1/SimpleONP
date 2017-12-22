@@ -12,12 +12,14 @@ public class Converter {
     private StringBuilder result;
     private int i;
     private char currentChar;
+    private int operatorCount;
 
     public String toRpn(String expression) {
 
         stack = new Stack<>();
         result = new StringBuilder();
         i = 0;
+        operatorCount = 0;
 
         while (i < expression.length()) {
             currentChar = expression.charAt(i);
@@ -36,6 +38,7 @@ public class Converter {
 
         appendOperators();
 
+        if (operatorCount == 0) return "";
         return String.valueOf(result);
 
     }
@@ -67,6 +70,7 @@ public class Converter {
     }
 
     private void onOperator() {
+        operatorCount++;
         //to make space between numbers
         result.append(' ');
 
