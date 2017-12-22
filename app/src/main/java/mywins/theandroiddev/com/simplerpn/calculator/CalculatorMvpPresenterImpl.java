@@ -1,10 +1,13 @@
 package mywins.theandroiddev.com.simplerpn.calculator;
 
 import android.text.TextUtils;
+import android.util.Log;
 
 import mywins.theandroiddev.com.simplerpn.Converter;
 import mywins.theandroiddev.com.simplerpn.Evaluator;
 import mywins.theandroiddev.com.simplerpn.R;
+
+import static android.content.ContentValues.TAG;
 
 /**
  * Created by jakub on 15.12.17.
@@ -63,9 +66,9 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     @Override
     public void onClick(int id, Character insertedCharacter, String insertedExpression) {
 
-        checkIsResultShown(insertedCharacter);
-
-        if (isExpressionEmpty(insertedExpression)) {
+        if (resultShown) {
+            onResultShown(insertedCharacter, insertedExpression, id);
+        } else if (isExpressionEmpty(insertedExpression)) {
             onExpressionEmpty(insertedCharacter);
         } else {
             onExpressionNotEmpty(insertedCharacter, insertedExpression, id);
@@ -86,6 +89,7 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
         } else if (converter.isOperator(character) && isNotDoublingOperator(character, expression)) {
             writeExpression(expression, character);
         } else {
+            Log.d(TAG, "onExpressionNotEmpty: HERE");
             switchCharacterId(id, expression);
         }
 
@@ -102,11 +106,17 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
 
             case R.id.equals_button:
                 calculate(insertedExpression);
+                Log.d(TAG, "switchCharacterId: " + id);
+
                 break;
             case R.id.delete_button:
                 delete(insertedExpression);
+                Log.d(TAG, "switchCharacterId: " + id);
+
                 break;
             case R.id.dot_button:
+                Log.d(TAG, "switchCharacterId: " + id);
+
                 unsupported();
                 break;
             default:
@@ -125,18 +135,23 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
 
     }
 
-    private void checkIsResultShown(Character character) {
+    private void onResultShown(Character character, String insertedExpression, int id) {
         if (resultShown) {
-
             if (Character.isDigit(character)) {
                 view.clearInput();
                 view.displayDeleteButton();
                 setResultShown(false);
-            }
-            if (converter.isOperator(character)) {
+                writeExpression("", character);
+
+            } else if (converter.isOperator(character)) {
                 view.displayDeleteButton();
+                writeExpression(insertedExpression, character);
                 setResultShown(false);
+
+            } else {
+                switchCharacterId(id, insertedExpression);
             }
+
         }
     }
 
