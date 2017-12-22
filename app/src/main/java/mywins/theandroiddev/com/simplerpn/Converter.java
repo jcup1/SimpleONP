@@ -1,7 +1,5 @@
 package mywins.theandroiddev.com.simplerpn;
 
-import android.text.TextUtils;
-
 import java.util.Stack;
 
 /**
@@ -10,53 +8,76 @@ import java.util.Stack;
 
 public class Converter {
 
+    private Stack<Character> stack;
+    private StringBuilder result;
+    private int i;
+    private char currentChar;
+
     public String toRpn(String expression) {
 
-        Stack<Character> stack = new Stack<>();
-        StringBuilder result = new StringBuilder();
-        int operatorCount = 0;
+        stack = new Stack<>();
+        result = new StringBuilder();
+        i = 0;
 
-        int i = 0;
         while (i < expression.length()) {
-            if (Character.isDigit(expression.charAt(i))) {
-                result.append(expression.charAt(i));
-            } else if (isOperator(expression.charAt(i))) {
-                //to make space between numbers
-                operatorCount++;
-                result.append(' ');
-
-                while (!stack.isEmpty() && !isOpenBracket(expression.charAt(i)) &&
-                        (getWeight(expression.charAt(i)) <= getWeight(stack.peek()))) {
-                    result.append(stack.peek());
-                    stack.pop();
-                }//while
-                stack.push(expression.charAt(i));
-                //to make space between isOperator nad number(only when RPN operators are not at the end of the line.)
-                result.append(' ');
+            currentChar = expression.charAt(i);
+            if (Character.isDigit(currentChar)) {
+                onDigit();
+            } else if (isOperator(currentChar)) {
+                onOperator();
             }//else if
-            else if (isOpenBracket(expression.charAt(i))) {
-                stack.push(expression.charAt(i));
-            } else if (isClosedBracket(expression.charAt(i))) {
-                while (!stack.isEmpty() && !isOpenBracket(stack.peek())) {
-                    result.append(stack.peek());
-                    stack.pop();
-                }
-                //to avoid EmptyStackException when user input strange char
-                if (!stack.isEmpty())
-                    stack.pop();
+            else if (isOpenBracket(currentChar)) {
+                onOpenBracket();
+            } else if (isClosedBracket(currentChar)) {
+                onClosedBracket();
             }
             i++;
         }
 
-        //get operators
+        appendOperators();
+
+        return String.valueOf(result);
+
+    }
+
+    private void appendOperators() {
         while (!stack.isEmpty()) {
             result.append(stack.peek());
             stack.pop();
         }
+    }
 
-        if (TextUtils.isEmpty(result)) return "Letters are not allowed";
-        else if (operatorCount == 0) return "";
-        else return String.valueOf(result);
+    private void onDigit() {
+        result.append(currentChar);
+    }
+
+    private void onClosedBracket() {
+
+        while (!stack.isEmpty() && !isOpenBracket(stack.peek())) {
+            result.append(stack.peek());
+            stack.pop();
+        }
+        //to avoid EmptyStackException when user input strange char
+        if (!stack.isEmpty())
+            stack.pop();
+    }
+
+    private void onOpenBracket() {
+        stack.push(currentChar);
+    }
+
+    private void onOperator() {
+        //to make space between numbers
+        result.append(' ');
+
+        while (!stack.isEmpty() && !isOpenBracket(currentChar) &&
+                (getWeight(currentChar) <= getWeight(stack.peek()))) {
+            result.append(stack.peek());
+            stack.pop();
+        }
+        stack.push(currentChar);
+        //to make space between isOperator nad number(only when RPN operators are not at the end of the line.)
+        result.append(' ');
     }
 
     public boolean isOperator(char operator) {
