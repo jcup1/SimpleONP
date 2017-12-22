@@ -17,13 +17,18 @@ public class Evaluator {
     }
 
     private void nextChar() {
-        if (++position < expression.length()) character = expression.charAt(position);
-        else character = -1;
+        if (++position < expression.length()) {
+            character = expression.charAt(position);
+        } else {
+            character = -1;
+        }
     }
 
     private boolean operate(double operationCharacter) {
         //handle white spaces
-        while (character == ' ') nextChar();
+        while (character == ' ') {
+            nextChar();
+        }
         if (character == operationCharacter) {
             nextChar();
             return true;
@@ -35,7 +40,6 @@ public class Evaluator {
         nextChar();
         return parseExpression();
     }
-
 
     private double parseExpression() {
         double number;
@@ -56,6 +60,7 @@ public class Evaluator {
         double number;
 
         number = parseFactor();
+
         while (true) {
             if (operate('*')) {
                 number *= parseFactor();
@@ -66,8 +71,12 @@ public class Evaluator {
     }
 
     private double parseFactor() {
-        if (operate('+')) return parseFactor();
-        if (operate('-')) return -parseFactor();
+        if (operate('+')) {
+            return parseFactor();
+        }
+        if (operate('-')) {
+            return -parseFactor();
+        }
 
         double number;
         number = 0;
@@ -76,14 +85,20 @@ public class Evaluator {
             number = parseExpression();
             operate(')');
         } else if (Character.isDigit(character)) {
-            while (Character.isDigit(character)) nextChar();
+            while (Character.isDigit(character)) {
+                nextChar();
+            }
             number = Double.parseDouble(expression.substring(startPos, this.position));
         } else if (Character.isLetter(character)) {
-            while (Character.isLetter(character)) nextChar();
+            while (Character.isLetter(character)) {
+                nextChar();
+            }
             number = parseFactor();
         }
         //no double and '.' isOperator
-        if (operate('^')) number = Math.pow(number, parseFactor());
+        if (operate('^')) {
+            number = Math.pow(number, parseFactor());
+        }
 
         return number;
     }

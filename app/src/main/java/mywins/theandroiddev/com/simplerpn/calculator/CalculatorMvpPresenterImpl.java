@@ -47,16 +47,17 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     public void calculate(String insertedExpression) {
         double result;
 
-        if (isExpressionEmpty(insertedExpression)) {
-            view.displayExpressionEmptyMessage();
-
-        } else if (!converter.isOperator(getLastCharacter(insertedExpression))) {
+        if (isLastCharacterNotOperator(insertedExpression)) {
             setResultShown(true);
             result = evaluator.evaluate(insertedExpression);
             view.displayEqualsResult(String.valueOf(((long) result)));
             view.displayClearButton();
         }
 
+    }
+
+    private boolean isLastCharacterNotOperator(String insertedExpression) {
+        return !converter.isOperator(getLastCharacter(insertedExpression));
     }
 
     @Override
