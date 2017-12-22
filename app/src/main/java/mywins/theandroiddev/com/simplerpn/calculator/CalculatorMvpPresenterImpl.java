@@ -17,7 +17,7 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
 
     CalculatorMvpPresenterImpl() {
         converter = new Converter();
-        resultShown = false;
+        setResultShown(false);
     }
 
     @Override
@@ -47,57 +47,52 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
         if (isExpressionEmpty(insertedExpression)) {
             view.displayExpressionEmptyMessage();
 
-        } else {
-            if (!converter.isOperator(insertedExpression.charAt(insertedExpression.length() - 1))) {
-                resultShown = true;
-                result = converter.evaluate(insertedExpression);
-                view.displayEqualsResult(String.valueOf(((long) result)));
-                view.displayClearButton();
-            }
+        } else if (!converter.isOperator(getLastCharacter(insertedExpression))) {
+            setResultShown(true);
+            result = converter.evaluate(insertedExpression);
+            view.displayEqualsResult(String.valueOf(((long) result)));
+            view.displayClearButton();
         }
-
 
     }
 
     @Override
-    public void onClick(int id, Character c, String insertedExpression) {
+    public void onClick(int id, Character insertedCharacter, String insertedExpression) {
 
-        if (resultShown) {
+        checkIsResultShown(insertedCharacter);
 
-            if (Character.isDigit(c)) {
-                view.clearInput();
-                view.displayDeleteButton();
-                setResultShown(false);
-            }
-            if (converter.isOperator(c)) {
-                view.displayDeleteButton();
-                setResultShown(false);
-            }
+        if (isExpressionEmpty(insertedExpression)) {
+            onExpressionEmpty(insertedCharacter);
+        } else {
+            onExpressionNotEmpty(insertedCharacter, insertedExpression, id);
         }
 
-        if (Character.isDigit(c) || converter.isOperator(c)) {
-            char lastChar;
-            if (insertedExpression.length() > 0) {
-                lastChar = insertedExpression.charAt(insertedExpression.length() - 1);
+    }
 
-                //don't divide by 0
-                if (c.equals('0') && lastChar == '/') {
-                    return;
-                }
-
-                if (converter.isOperator(c) && converter.isOperator(lastChar)) {
-                    insertedExpression = removeLastChar(insertedExpression);
-                }
-            }
-
-            if (insertedExpression.length() == 0) {
-                if (c.equals('/') || c.equals('*') || c.equals('+')) return;
-            }
-
-            view.displayInputExpression(insertedExpression + c);
-            convertToRpn(insertedExpression + c);
-            return;
+    private void onExpressionEmpty(Character character) {
+        if (isCharacterLegal(character)) {
+            writeExpression("", character);
         }
+    }
+
+    private void onExpressionNotEmpty(Character character, String expression, int id) {
+
+        if (isNotDividingByZero(character, expression) && Character.isDigit(character)) {
+            writeExpression(expression, character);
+        } else if (converter.isOperator(character) && isNotDoublingOperator(character, expression)) {
+            writeExpression(expression, character);
+        } else {
+            switchCharacterId(id, expression);
+        }
+
+    }
+
+    private void writeExpression(String expression, Character character) {
+        view.displayInputExpression(expression + character);
+        convertToRpn(expression + character);
+    }
+
+    private void switchCharacterId(int id, String insertedExpression) {
 
         switch (id) {
 
@@ -112,6 +107,32 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
                 break;
             default:
                 break;
+        }
+    }
+
+    private boolean isNotDividingByZero(Character character, String insertedExpression) {
+        return !(character.equals('0') && getLastCharacter(insertedExpression) == '/');
+
+    }
+
+    private boolean isCharacterLegal(Character character) {
+
+        return Character.isDigit(character) || character.equals('-');
+
+    }
+
+    private void checkIsResultShown(Character character) {
+        if (resultShown) {
+
+            if (Character.isDigit(character)) {
+                view.clearInput();
+                view.displayDeleteButton();
+                setResultShown(false);
+            }
+            if (converter.isOperator(character)) {
+                view.displayDeleteButton();
+                setResultShown(false);
+            }
         }
     }
 
@@ -137,18 +158,25 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     }
 
     @Override
-    public void setResultShown(boolean b) {
-        resultShown = b;
+    public void setResultShown(boolean resultShown) {
+        this.resultShown = resultShown;
     }
 
-    private boolean isExpressionEmpty(String s) {
-        return TextUtils.isEmpty(s);
+    private boolean isExpressionEmpty(String expression) {
+        return TextUtils.isEmpty(expression);
     }
 
-    private String removeLastChar(String s) {
-        return (s == null || s.length() == 0)
-                ? null
-                : (s.substring(0, s.length() - 1));
+    private String removeLastChar(String expression) {
+        if (expression == null || expression.length() == 0) return null;
+        else return expression.substring(0, expression.length() - 1);
     }
 
+    private char getLastCharacter(String insertedExpression) {
+        return insertedExpression.charAt(insertedExpression.length() - 1);
+    }
+
+    //is user trying to write 2 operators in a row?
+    private boolean isNotDoublingOperator(Character character, String insertedExpression) {
+        return !(converter.isOperator(character) && converter.isOperator(getLastCharacter(insertedExpression)));
+    }
 }
