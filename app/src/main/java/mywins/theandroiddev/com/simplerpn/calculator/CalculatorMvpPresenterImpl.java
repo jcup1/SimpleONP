@@ -1,13 +1,10 @@
 package mywins.theandroiddev.com.simplerpn.calculator;
 
 import android.text.TextUtils;
-import android.util.Log;
 
 import mywins.theandroiddev.com.simplerpn.Converter;
 import mywins.theandroiddev.com.simplerpn.Evaluator;
 import mywins.theandroiddev.com.simplerpn.R;
-
-import static android.content.ContentValues.TAG;
 
 /**
  * Created by jakub on 15.12.17.
@@ -77,7 +74,7 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     }
 
     private void onExpressionEmpty(Character character) {
-        if (isCharacterLegal(character)) {
+        if (isAllowedAsFirstCharacter(character)) {
             writeExpression("", character);
         }
     }
@@ -88,8 +85,9 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
             writeExpression(expression, character);
         } else if (converter.isOperator(character) && isNotDoublingOperator(character, expression)) {
             writeExpression(expression, character);
+        } else if (converter.isOperator(character)) {
+            writeExpression(removeLastChar(expression), character);
         } else {
-            Log.d(TAG, "onExpressionNotEmpty: HERE");
             switchCharacterId(id, expression);
         }
 
@@ -106,16 +104,13 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
 
             case R.id.equals_button:
                 calculate(insertedExpression);
-                Log.d(TAG, "switchCharacterId: " + id);
 
                 break;
             case R.id.delete_button:
                 delete(insertedExpression);
-                Log.d(TAG, "switchCharacterId: " + id);
 
                 break;
             case R.id.dot_button:
-                Log.d(TAG, "switchCharacterId: " + id);
 
                 unsupported();
                 break;
@@ -129,15 +124,15 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
 
     }
 
-    private boolean isCharacterLegal(Character character) {
+    private boolean isAllowedAsFirstCharacter(Character character) {
 
-        return Character.isDigit(character) || character.equals('-');
+        return (Character.isDigit(character) || character.equals('-')) && !character.equals('0');
 
     }
 
     private void onResultShown(Character character, String insertedExpression, int id) {
         if (resultShown) {
-            if (Character.isDigit(character)) {
+            if (Character.isDigit(character) && isAllowedAsFirstCharacter(character)) {
                 view.clearInput();
                 view.displayDeleteButton();
                 setResultShown(false);
