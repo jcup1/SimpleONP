@@ -3,6 +3,7 @@ package mywins.theandroiddev.com.simplerpn.calculator;
 import android.text.TextUtils;
 
 import mywins.theandroiddev.com.simplerpn.Converter;
+import mywins.theandroiddev.com.simplerpn.Evaluator;
 import mywins.theandroiddev.com.simplerpn.R;
 
 /**
@@ -13,10 +14,12 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
 
     private CalculatorMvpView view;
     private Converter converter;
+    private Evaluator evaluator;
     private boolean resultShown;
 
     CalculatorMvpPresenterImpl() {
         converter = new Converter();
+        evaluator = new Evaluator();
         setResultShown(false);
     }
 
@@ -49,7 +52,7 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
 
         } else if (!converter.isOperator(getLastCharacter(insertedExpression))) {
             setResultShown(true);
-            result = converter.evaluate(insertedExpression);
+            result = evaluator.evaluate(insertedExpression);
             view.displayEqualsResult(String.valueOf(((long) result)));
             view.displayClearButton();
         }
