@@ -14,9 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3"
+        android:ellipsize="marquee"
         android:gravity="top|end"
-        android:maxLines="1"
         android:padding="@dimen/padding_input_land"
+        android:singleLine="true"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_size_input_land"
         />
@@ -26,9 +27,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3.2"
+        android:ellipsize="marquee"
         android:gravity="end"
-        android:maxLines="1"
         android:padding="@dimen/padding_result_land"
+        android:singleLine="true"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/text_size_result_land"/>
 
