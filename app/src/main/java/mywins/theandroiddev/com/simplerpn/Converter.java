@@ -16,10 +16,20 @@ public class Converter {
 
     public String toRpn(String expression) {
 
-        stack = new Stack<>();
-        result = new StringBuilder();
-        i = 0;
-        operatorCount = 0;
+        reset();
+
+        appendDigits(expression);
+
+        appendOperators();
+
+        if (operatorCount == 0) {
+            return "";
+        }
+        return String.valueOf(result);
+
+    }
+
+    private void appendDigits(String expression) {
 
         while (i < expression.length()) {
             currentChar = expression.charAt(i);
@@ -27,20 +37,20 @@ public class Converter {
                 onDigit();
             } else if (isOperator(currentChar)) {
                 onOperator();
-            }//else if
-            else if (isOpenBracket(currentChar)) {
+            } else if (isOpenBracket(currentChar)) {
                 onOpenBracket();
             } else if (isClosedBracket(currentChar)) {
                 onClosedBracket();
             }
             i++;
         }
+    }
 
-        appendOperators();
-
-        if (operatorCount == 0) return "";
-        return String.valueOf(result);
-
+    private void reset() {
+        stack = new Stack<>();
+        result = new StringBuilder();
+        i = 0;
+        operatorCount = 0;
     }
 
     private void appendOperators() {
