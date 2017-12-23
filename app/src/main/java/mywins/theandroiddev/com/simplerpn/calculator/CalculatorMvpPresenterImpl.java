@@ -17,6 +17,7 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     private Evaluator evaluator;
     private boolean resultShown;
     private Character lastCharacter;
+    private double result;
 
     CalculatorMvpPresenterImpl() {
         converter = new Converter();
@@ -46,7 +47,6 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
 
     @Override
     public void calculate(String infixExpression) {
-        double result;
 
         if (isLastCharacterNotOperator(infixExpression)) {
             setResultShown(true);
@@ -135,21 +135,31 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     private void onResultShown(int id, String expression, Character character) {
         if (resultShown) {
             if (Character.isDigit(character) && isAllowedAsFirstCharacter(character)) {
-                view.clearInput();
-                view.displayDeleteButton();
-                setResultShown(false);
-                writeExpression("", character);
+                onResultShownDigit(character);
 
             } else if (converter.isOperator(character)) {
-                view.displayDeleteButton();
-                writeExpression(expression, character);
-                setResultShown(false);
+                onResultShownOperator(expression, character);
 
             } else {
                 switchCharacterId(id, expression);
             }
 
         }
+    }
+
+    private void onResultShownOperator(String expression, Character character) {
+
+        view.displayDeleteButton();
+        writeExpression(expression, character);
+        setResultShown(false);
+    }
+
+    private void onResultShownDigit(Character character) {
+
+        view.clearInput();
+        view.displayDeleteButton();
+        setResultShown(false);
+        writeExpression("", character);
     }
 
     private void unsupported() {
@@ -202,11 +212,6 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
         lastCharacter = getLastCharacter(expression);
         //I can handle it here calling a method onDoubleMinus
         return isDoubleMinus(lastCharacter, character) || isMinusAfterOperator(lastCharacter, character);
-    }
-
-
-    private boolean areCharactersEqual(Character lastAcceptedCharacter, Character inputCharacter) {
-        return lastAcceptedCharacter.equals(inputCharacter);
     }
 
     private boolean isNotMinusZero(String expression, Character character) {
