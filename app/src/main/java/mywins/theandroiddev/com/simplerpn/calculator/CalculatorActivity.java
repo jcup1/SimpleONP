@@ -30,17 +30,17 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorM
         inputTextView = findViewById(R.id.input_text_view);
         resultTextView = findViewById(R.id.result_text_view);
 
-        num7Button = findViewById(R.id.num_7_button);
-        num8Button = findViewById(R.id.num_8_button);
-        num9Button = findViewById(R.id.num_9_button);
-        num4Button = findViewById(R.id.num_4_button);
-        num5Button = findViewById(R.id.num_5_button);
-        num6Button = findViewById(R.id.num_6_button);
+        num0Button = findViewById(R.id.num_0_button);
         num1Button = findViewById(R.id.num_1_button);
         num2Button = findViewById(R.id.num_2_button);
         num3Button = findViewById(R.id.num_3_button);
+        num4Button = findViewById(R.id.num_4_button);
+        num5Button = findViewById(R.id.num_5_button);
+        num6Button = findViewById(R.id.num_6_button);
+        num7Button = findViewById(R.id.num_7_button);
+        num8Button = findViewById(R.id.num_8_button);
+        num9Button = findViewById(R.id.num_9_button);
         dotButton = findViewById(R.id.dot_button);
-        num0Button = findViewById(R.id.num_0_button);
         equalsButton = findViewById(R.id.equals_button);
 
         deleteButton = findViewById(R.id.delete_button);
@@ -49,17 +49,17 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorM
         minusButton = findViewById(R.id.minus_button);
         plusButton = findViewById(R.id.plus_button);
 
-        num7Button.setOnClickListener(this);
-        num8Button.setOnClickListener(this);
-        num9Button.setOnClickListener(this);
-        num4Button.setOnClickListener(this);
-        num5Button.setOnClickListener(this);
-        num6Button.setOnClickListener(this);
+        num0Button.setOnClickListener(this);
         num1Button.setOnClickListener(this);
         num2Button.setOnClickListener(this);
         num3Button.setOnClickListener(this);
+        num4Button.setOnClickListener(this);
+        num5Button.setOnClickListener(this);
+        num6Button.setOnClickListener(this);
+        num7Button.setOnClickListener(this);
+        num8Button.setOnClickListener(this);
+        num9Button.setOnClickListener(this);
         dotButton.setOnClickListener(this);
-        num0Button.setOnClickListener(this);
         equalsButton.setOnClickListener(this);
 
         deleteButton.setOnClickListener(this);

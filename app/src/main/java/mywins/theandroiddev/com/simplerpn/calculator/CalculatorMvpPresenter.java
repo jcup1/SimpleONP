@@ -14,7 +14,7 @@ public interface CalculatorMvpPresenter {
 
     void calculate(String insertedExpression);
 
-    void onClick(int id, Character c, String insertedExpression);
+    void onClick(int id, Character insertedCharacter, String inputExpression);
 
     boolean isResultShown();
 
