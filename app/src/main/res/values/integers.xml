@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <integer name="max_lines_input_text_view_portrait">2</integer>
+    <integer name="max_lines_result_text_view_portrait">1</integer>
+    <integer name="max_lines_input_text_view_landscape">1</integer>
+    <integer name="max_lines_result_text_view_landscape">1</integer>
+
+    <integer name="weight_input_text_view_portrait">25</integer>
+    <integer name="weight_result_text_view_portrait">30</integer>
+
+    <integer name="weight_input_text_view_landscape">30</integer>
+    <integer name="weight_result_text_view_landscape">32</integer>
+
+    <integer name="weight_main_constraint_layout_portrait">14</integer>
+    <integer name="weight_main_constraint_layout_landscape">14</integer>
+
+</resources>

@@ -13,32 +13,32 @@
         android:id="@+id/input_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="@integer/weight_input_text_view_portrait"
-        android:ellipsize="marquee"
-        android:gravity="bottom|end"
-        android:padding="@dimen/padding_input_portrait"
-        android:singleLine="false"
+        android:layout_weight="@integer/weight_input_text_view_landscape"
+        android:ellipsize="start"
+        android:gravity="top|end"
+        android:maxLines="@integer/max_lines_input_text_view_landscape"
+        android:padding="@dimen/padding_input_landscape"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_size_input_text_view_portrait"
+        android:textSize="@dimen/text_size_input_text_view_landscape"
         />
 
     <TextView
         android:id="@+id/result_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="@integer/weight_result_text_view_portrait"
-        android:ellipsize="marquee"
-        android:gravity="center_vertical|end"
-        android:padding="@dimen/padding_result_portrait"
-        android:singleLine="true"
+        android:layout_weight="@integer/weight_result_text_view_landscape"
+        android:ellipsize="start"
+        android:gravity="end"
+        android:maxLines="@integer/max_lines_result_text_view_landscape"
+        android:padding="@dimen/padding_result_landscape"
         android:textColor="@color/secondary_text"
-        android:textSize="@dimen/text_size_result_text_view_portrait"/>
+        android:textSize="@dimen/text_size_result_text_view_landscape"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/main_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="@integer/weight_main_constraint_layout_portrait"
+        android:layout_weight="@integer/weight_main_constraint_layout_landscape"
         android:orientation="horizontal">
 
         <android.support.constraint.ConstraintLayout
@@ -58,7 +58,7 @@
                 android:layout_height="0dp"
                 android:text="@string/num_0_button"
                 app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/equals_button"
+                app:layout_constraintEnd_toStartOf="@+id/view"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/dot_button"
                 app:layout_constraintTop_toBottomOf="@+id/num_2_button"/>
@@ -93,7 +93,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="@string/num_3_button"
-                app:layout_constraintBottom_toTopOf="@+id/equals_button"
+                app:layout_constraintBottom_toTopOf="@+id/view"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/num_2_button"
@@ -108,7 +108,6 @@
                 app:layout_constraintBottom_toTopOf="@+id/num_1_button"
                 app:layout_constraintEnd_toStartOf="@+id/num_5_button"
                 app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintHorizontal_chainStyle="spread_inside"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/num_7_button"/>
 
@@ -172,7 +171,6 @@
                 app:layout_constraintStart_toEndOf="@+id/num_8_button"
                 app:layout_constraintTop_toTopOf="parent"/>
 
-
             <Button
                 android:id="@+id/dot_button"
                 style="@style/CalculatorButton"
@@ -185,12 +183,11 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/num_1_button"/>
 
-            <Button
-                android:id="@+id/equals_button"
-                style="@style/CalculatorButton"
+            <View
+                android:id="@+id/view"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="@string/equals_button"
+                android:visibility="invisible"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -201,12 +198,27 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/operator_constraint_layout"
-            android:layout_width="@dimen/width_operator_bar_portrait"
+            android:layout_width="@dimen/width_operator_bar_landscape"
             android:layout_height="0dp"
             android:background="@color/color_primary"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toStartOf="@+id/slider"
-            app:layout_constraintTop_toTopOf="parent">
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toEndOf="@+id/num_constraint_layout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintVertical_bias="0.0">
+
+            <Button
+                android:id="@+id/plus_button"
+                style="@style/CalculatorButton"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/plus_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/minus_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/minus_button"/>
 
             <Button
                 android:id="@+id/delete_button"
@@ -214,12 +226,12 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="@string/delete_button"
-                android:textSize="@dimen/text_size_delete_button_portrait"
-                app:layout_constraintBottom_toTopOf="@+id/divide_button"
+                android:textSize="@dimen/text_size_delete_button_landscape"
+                app:layout_constraintBottom_toTopOf="@+id/multiply_button"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintVertical_chainStyle="spread_inside"/>
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/divide_button"
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <Button
                 android:id="@+id/divide_button"
@@ -228,9 +240,10 @@
                 android:layout_height="0dp"
                 android:text="@string/divide_button"
                 app:layout_constraintBottom_toTopOf="@+id/multiply_button"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/delete_button"
+                app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/delete_button"/>
+                app:layout_constraintTop_toTopOf="parent"/>
 
             <Button
                 android:id="@+id/multiply_button"
@@ -239,7 +252,7 @@
                 android:layout_height="0dp"
                 android:text="@string/multiply_button"
                 app:layout_constraintBottom_toTopOf="@+id/minus_button"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/divide_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/divide_button"/>
 
@@ -250,29 +263,31 @@
                 android:layout_height="0dp"
                 android:text="@string/minus_button"
                 app:layout_constraintBottom_toTopOf="@+id/plus_button"
-                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintEnd_toEndOf="@+id/multiply_button"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/multiply_button"/>
 
             <Button
-                android:id="@+id/plus_button"
+                android:id="@+id/equals_button"
                 style="@style/CalculatorButton"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
-                android:text="@string/plus_button"
+                android:text="@string/equals_button"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/plus_button"
                 app:layout_constraintTop_toBottomOf="@+id/minus_button"/>
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/slider"
-            android:layout_width="@dimen/width_function_bar_portrait"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/color_accent"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toEndOf="@+id/operator_constraint_layout"
             app:layout_constraintTop_toTopOf="parent">
 
         </android.support.constraint.ConstraintLayout>

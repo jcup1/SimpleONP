@@ -7,7 +7,8 @@ import mywins.theandroiddev.com.simplerpn.Evaluator;
 import mywins.theandroiddev.com.simplerpn.R;
 
 /**
- * Created by jakub on 15.12.17.
+ * Created by jakub
+ * on 15.12.17.
  */
 
 public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
@@ -38,7 +39,8 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     @Override
     public void convertToRpn(String infixExpression) {
         if (isExpressionEmpty(infixExpression)) {
-            view.displayExpressionEmptyMessage();
+            //It shouldn't happen
+            view.displayEmpty();
 
         } else {
             view.displayRpnResult(converter.toRpn(infixExpression));
@@ -193,8 +195,11 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     }
 
     private String removeLastChar(String expression) {
-        if (expression == null || expression.length() == 0) return null;
-        else return expression.substring(0, expression.length() - 1);
+        if (expression == null || expression.length() == 0) {
+            return null;
+        } else {
+            return expression.substring(0, expression.length() - 1);
+        }
     }
 
     private char getLastCharacter(String expression) {

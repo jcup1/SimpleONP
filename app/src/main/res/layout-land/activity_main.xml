@@ -13,32 +13,32 @@
         android:id="@+id/input_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3"
+        android:layout_weight="@integer/weight_input_text_view_landscape"
         android:ellipsize="marquee"
         android:gravity="top|end"
-        android:padding="@dimen/padding_input_land"
+        android:padding="@dimen/padding_input_landscape"
         android:singleLine="true"
         android:textColor="@color/primary_text"
-        android:textSize="@dimen/text_size_input_land"
+        android:textSize="@dimen/text_size_input_text_view_landscape"
         />
 
     <TextView
         android:id="@+id/result_text_view"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="3.2"
+        android:layout_weight="@integer/weight_result_text_view_landscape"
         android:ellipsize="marquee"
         android:gravity="end"
-        android:padding="@dimen/padding_result_land"
+        android:padding="@dimen/padding_result_landscape"
         android:singleLine="true"
         android:textColor="@color/secondary_text"
-        android:textSize="@dimen/text_size_result_land"/>
+        android:textSize="@dimen/text_size_result_text_view_landscape"/>
 
     <android.support.constraint.ConstraintLayout
         android:id="@+id/main_constraint_layout"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_weight="1.4"
+        android:layout_weight="@integer/weight_main_constraint_layout_landscape"
         android:orientation="horizontal">
 
         <android.support.constraint.ConstraintLayout
@@ -50,54 +50,6 @@
             app:layout_constraintEnd_toStartOf="@+id/operator_constraint_layout"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
-
-            <Button
-                android:id="@+id/num_7_button"
-                style="@style/CalculatorButton"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="@string/num_7_button"
-                app:layout_constraintBottom_toTopOf="@+id/num_4_button"
-                app:layout_constraintEnd_toStartOf="@+id/num_8_button"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <Button
-                android:id="@+id/num_9_button"
-                style="@style/CalculatorButton"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="@string/num_9_button"
-                app:layout_constraintBottom_toTopOf="@+id/num_6_button"
-                app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toEndOf="@+id/num_8_button"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <Button
-                android:id="@+id/num_4_button"
-                style="@style/CalculatorButton"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="@string/num_4_button"
-                app:layout_constraintBottom_toTopOf="@+id/num_1_button"
-                app:layout_constraintEnd_toStartOf="@+id/num_5_button"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/num_7_button"/>
-
-            <Button
-                android:id="@+id/dot_button"
-                style="@style/CalculatorButton"
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:text="@string/dot_button"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/num_0_button"
-                app:layout_constraintHorizontal_bias="0.5"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/num_1_button"/>
 
             <Button
                 android:id="@+id/num_0_button"
@@ -148,6 +100,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/num_6_button"/>
 
             <Button
+                android:id="@+id/num_4_button"
+                style="@style/CalculatorButton"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/num_4_button"
+                app:layout_constraintBottom_toTopOf="@+id/num_1_button"
+                app:layout_constraintEnd_toStartOf="@+id/num_5_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/num_7_button"/>
+
+            <Button
                 android:id="@+id/num_5_button"
                 style="@style/CalculatorButton"
                 android:layout_width="0dp"
@@ -172,6 +136,18 @@
                 app:layout_constraintTop_toBottomOf="@+id/num_9_button"/>
 
             <Button
+                android:id="@+id/num_7_button"
+                style="@style/CalculatorButton"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/num_7_button"
+                app:layout_constraintBottom_toTopOf="@+id/num_4_button"
+                app:layout_constraintEnd_toStartOf="@+id/num_8_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <Button
                 android:id="@+id/num_8_button"
                 style="@style/CalculatorButton"
                 android:layout_width="0dp"
@@ -182,6 +158,30 @@
                 app:layout_constraintHorizontal_bias="0.5"
                 app:layout_constraintStart_toEndOf="@+id/num_7_button"
                 app:layout_constraintTop_toTopOf="parent"/>
+
+            <Button
+                android:id="@+id/num_9_button"
+                style="@style/CalculatorButton"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/num_9_button"
+                app:layout_constraintBottom_toTopOf="@+id/num_6_button"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toEndOf="@+id/num_8_button"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <Button
+                android:id="@+id/dot_button"
+                style="@style/CalculatorButton"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:text="@string/dot_button"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/num_0_button"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/num_1_button"/>
 
             <View
                 android:id="@+id/view"
@@ -198,11 +198,11 @@
 
         <android.support.constraint.ConstraintLayout
             android:id="@+id/operator_constraint_layout"
-            android:layout_width="@dimen/width_operator_bar_land"
+            android:layout_width="@dimen/width_operator_bar_landscape"
             android:layout_height="0dp"
             android:background="@color/color_primary"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/slide"
+            app:layout_constraintEnd_toStartOf="@+id/slider"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toEndOf="@+id/num_constraint_layout"
             app:layout_constraintTop_toTopOf="parent"
@@ -226,7 +226,7 @@
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:text="@string/delete_button"
-                android:textSize="@dimen/text_size_delete_button_land"
+                android:textSize="@dimen/text_size_delete_button_landscape"
                 app:layout_constraintBottom_toTopOf="@+id/multiply_button"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.5"
@@ -281,7 +281,7 @@
         </android.support.constraint.ConstraintLayout>
 
         <android.support.constraint.ConstraintLayout
-            android:id="@+id/slide"
+            android:id="@+id/slider"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:background="@color/color_accent"

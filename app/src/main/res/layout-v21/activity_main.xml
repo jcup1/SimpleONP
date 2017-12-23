@@ -14,10 +14,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="@integer/weight_input_text_view_portrait"
-        android:ellipsize="marquee"
+        android:ellipsize="start"
         android:gravity="bottom|end"
+        android:maxLines="@integer/max_lines_input_text_view_portrait"
         android:padding="@dimen/padding_input_portrait"
-        android:singleLine="false"
         android:textColor="@color/primary_text"
         android:textSize="@dimen/text_size_input_text_view_portrait"
         />
@@ -27,10 +27,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="@integer/weight_result_text_view_portrait"
-        android:ellipsize="marquee"
+        android:ellipsize="start"
         android:gravity="center_vertical|end"
+        android:maxLines="@integer/max_lines_result_text_view_portrait"
         android:padding="@dimen/padding_result_portrait"
-        android:singleLine="true"
         android:textColor="@color/secondary_text"
         android:textSize="@dimen/text_size_result_text_view_portrait"/>
 

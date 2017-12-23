@@ -1,12 +1,13 @@
 package mywins.theandroiddev.com.simplerpn.calculator;
 
 /**
- * Created by jakub on 15.12.17.
+ * Created by jakub
+ * on 15.12.17.
  */
 
 public interface CalculatorMvpView {
 
-    void displayExpressionEmptyMessage();
+    void displayEmpty();
 
     void displayRpnResult(String expression);
 

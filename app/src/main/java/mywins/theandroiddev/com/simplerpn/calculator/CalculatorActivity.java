@@ -68,6 +68,7 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorM
         minusButton.setOnClickListener(this);
         plusButton.setOnClickListener(this);
 
+
         presenter = new CalculatorMvpPresenterImpl();
 
     }
@@ -135,7 +136,7 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorM
     }
 
     @Override
-    public void displayExpressionEmptyMessage() {
+    public void displayEmpty() {
         clearResult();
     }
 
