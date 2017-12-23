@@ -27,28 +27,17 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorM
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        inputTextView = findViewById(R.id.input_text_view);
-        resultTextView = findViewById(R.id.result_text_view);
+        findViews();
+        setListeners();
+        setUpPresenter();
 
-        num0Button = findViewById(R.id.num_0_button);
-        num1Button = findViewById(R.id.num_1_button);
-        num2Button = findViewById(R.id.num_2_button);
-        num3Button = findViewById(R.id.num_3_button);
-        num4Button = findViewById(R.id.num_4_button);
-        num5Button = findViewById(R.id.num_5_button);
-        num6Button = findViewById(R.id.num_6_button);
-        num7Button = findViewById(R.id.num_7_button);
-        num8Button = findViewById(R.id.num_8_button);
-        num9Button = findViewById(R.id.num_9_button);
-        dotButton = findViewById(R.id.dot_button);
-        equalsButton = findViewById(R.id.equals_button);
+    }
 
-        deleteButton = findViewById(R.id.delete_button);
-        divideButton = findViewById(R.id.divide_button);
-        multiplyButton = findViewById(R.id.multiply_button);
-        minusButton = findViewById(R.id.minus_button);
-        plusButton = findViewById(R.id.plus_button);
+    private void setUpPresenter() {
+        presenter = new CalculatorMvpPresenterImpl();
+    }
 
+    private void setListeners() {
         num0Button.setOnClickListener(this);
         num1Button.setOnClickListener(this);
         num2Button.setOnClickListener(this);
@@ -67,10 +56,29 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorM
         multiplyButton.setOnClickListener(this);
         minusButton.setOnClickListener(this);
         plusButton.setOnClickListener(this);
+    }
 
+    private void findViews() {
+        inputTextView = findViewById(R.id.input_text_view);
+        resultTextView = findViewById(R.id.result_text_view);
+        num0Button = findViewById(R.id.num_0_button);
+        num1Button = findViewById(R.id.num_1_button);
+        num2Button = findViewById(R.id.num_2_button);
+        num3Button = findViewById(R.id.num_3_button);
+        num4Button = findViewById(R.id.num_4_button);
+        num5Button = findViewById(R.id.num_5_button);
+        num6Button = findViewById(R.id.num_6_button);
+        num7Button = findViewById(R.id.num_7_button);
+        num8Button = findViewById(R.id.num_8_button);
+        num9Button = findViewById(R.id.num_9_button);
+        dotButton = findViewById(R.id.dot_button);
+        equalsButton = findViewById(R.id.equals_button);
 
-        presenter = new CalculatorMvpPresenterImpl();
-
+        deleteButton = findViewById(R.id.delete_button);
+        divideButton = findViewById(R.id.divide_button);
+        multiplyButton = findViewById(R.id.multiply_button);
+        minusButton = findViewById(R.id.minus_button);
+        plusButton = findViewById(R.id.plus_button);
     }
 
     @Override
