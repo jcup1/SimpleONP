@@ -118,14 +118,14 @@ public class CalculatorActivity extends AppCompatActivity implements CalculatorM
     }
 
     @Override
-    public void displayRpnResult(String result) {
-        resultTextView.setText(result);
+    public void displayRpnResult(String expression) {
+        resultTextView.setText(expression);
     }
 
     @Override
-    public void displayEqualsResult(String result) {
+    public void displayEqualsResult(String expression) {
         clearResult();
-        inputTextView.setText(result);
+        inputTextView.setText(expression);
 
     }
 

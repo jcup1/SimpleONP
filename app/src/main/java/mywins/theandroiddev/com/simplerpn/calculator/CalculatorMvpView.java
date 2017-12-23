@@ -8,11 +8,11 @@ public interface CalculatorMvpView {
 
     void displayExpressionEmptyMessage();
 
-    void displayRpnResult(String s);
+    void displayRpnResult(String expression);
 
-    void displayEqualsResult(String s);
+    void displayEqualsResult(String expression);
 
-    void displayInputExpression(String s);
+    void displayInputExpression(String expression);
 
     void displayUnsupportedMessage();
 

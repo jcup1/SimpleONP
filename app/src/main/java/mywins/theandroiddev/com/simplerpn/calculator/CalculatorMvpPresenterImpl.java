@@ -16,6 +16,7 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     private Converter converter;
     private Evaluator evaluator;
     private boolean resultShown;
+    private Character lastCharacter;
 
     CalculatorMvpPresenterImpl() {
         converter = new Converter();
@@ -64,11 +65,11 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     public void onClick(int id, Character insertedCharacter, String inputExpression) {
 
         if (resultShown) {
-            onResultShown(insertedCharacter, inputExpression, id);
+            onResultShown(id, inputExpression, insertedCharacter);
         } else if (isExpressionEmpty(inputExpression)) {
             onExpressionEmpty(insertedCharacter);
         } else {
-            onExpressionNotEmpty(insertedCharacter, inputExpression, id);
+            onExpressionNotEmpty(id, inputExpression, insertedCharacter);
         }
 
     }
@@ -79,14 +80,15 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
         }
     }
 
-    private void onExpressionNotEmpty(Character character, String expression, int id) {
+    private void onExpressionNotEmpty(int id, String expression, Character character) {
 
-        if (isNotDividingByZero(character, expression) && Character.isDigit(character)) {
+        if (isNotDividingByZero(expression, character) && Character.isDigit(character)
+                && isNotMinusZero(expression, character)) {
             writeExpression(expression, character);
-        } else if (converter.isOperator(character) && isNotDoublingOperator(character, expression)) {
+        } else if (converter.isOperator(character) && isNotDoublingOperator(expression, character)) {
             writeExpression(expression, character);
-        } else if (converter.isOperator(character)) {
-            writeExpression(removeLastChar(expression), character);
+        } else if (converter.isOperator(character) && isAllowedInDoubling(expression, character)) {
+            writeExpression(expression, character);
         } else {
             switchCharacterId(id, expression);
         }
@@ -119,7 +121,7 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
         }
     }
 
-    private boolean isNotDividingByZero(Character character, String expression) {
+    private boolean isNotDividingByZero(String expression, Character character) {
         return !(character.equals('0') && getLastCharacter(expression) == '/');
 
     }
@@ -130,7 +132,7 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
 
     }
 
-    private void onResultShown(Character character, String expression, int id) {
+    private void onResultShown(int id, String expression, Character character) {
         if (resultShown) {
             if (Character.isDigit(character) && isAllowedAsFirstCharacter(character)) {
                 view.clearInput();
@@ -190,7 +192,32 @@ public class CalculatorMvpPresenterImpl implements CalculatorMvpPresenter {
     }
 
     //is user trying to write 2 operators in a row?
-    private boolean isNotDoublingOperator(Character character, String expression) {
+    private boolean isNotDoublingOperator(String expression, Character character) {
         return !(converter.isOperator(character) && converter.isOperator(getLastCharacter(expression)));
+    }
+
+
+    private boolean isAllowedInDoubling(String expression, Character character) {
+
+        lastCharacter = getLastCharacter(expression);
+        //I can handle it here calling a method onDoubleMinus
+        return isDoubleMinus(lastCharacter, character) || isMinusAfterOperator(lastCharacter, character);
+    }
+
+
+    private boolean areCharactersEqual(Character lastAcceptedCharacter, Character inputCharacter) {
+        return lastAcceptedCharacter.equals(inputCharacter);
+    }
+
+    private boolean isNotMinusZero(String expression, Character character) {
+        return !(character.equals('0') && expression.length() == 1 && expression.charAt(0) == '-');
+    }
+
+    private boolean isDoubleMinus(Character lastAcceptedCharacter, Character inputCharacter) {
+        return lastAcceptedCharacter.equals('-') && inputCharacter.equals('-');
+    }
+
+    private boolean isMinusAfterOperator(Character lastAcceptedCharacter, Character inputCharacter) {
+        return converter.isOperator(lastAcceptedCharacter) && inputCharacter.equals('-');
     }
 }
