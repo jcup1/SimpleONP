@@ -9,6 +9,8 @@ public class Evaluator {
     private int position;
     private int character;
     private String expression;
+    private double number;
+    private int startPos;
 
     public double evaluate(final String expression) {
         position = -1;
@@ -54,8 +56,6 @@ public class Evaluator {
         }
     }
 
-    //I could use other multiply and divide symbols and convert them
-    //but I don't think that it's really important in this project
     private double parseTerm() {
         double number;
 
@@ -71,6 +71,7 @@ public class Evaluator {
     }
 
     private double parseFactor() {
+
         if (operate('+')) {
             return parseFactor();
         }
@@ -78,28 +79,56 @@ public class Evaluator {
             return -parseFactor();
         }
 
-        double number;
-        number = 0;
-        int startPos = this.position;
-        if (operate('(')) {
-            number = parseExpression();
-            operate(')');
-        } else if (Character.isDigit(character)) {
-            while (Character.isDigit(character)) {
-                nextChar();
-            }
-            number = Double.parseDouble(expression.substring(startPos, this.position));
-        } else if (Character.isLetter(character)) {
-            while (Character.isLetter(character)) {
-                nextChar();
-            }
-            number = parseFactor();
-        }
-        //no double and '.' isOperator
-        if (operate('^')) {
-            number = Math.pow(number, parseFactor());
-        }
+        reset();
+
+        checkOperate();
 
         return number;
+    }
+
+    private void reset() {
+        number = 0;
+        startPos = this.position;
+    }
+
+    private void checkOperate() {
+
+        if (operate('(')) {
+            onOperateOpenBracket();
+        } else if (Character.isDigit(character)) {
+            onCharacterIsDigit();
+        } else if (Character.isLetter(character)) {
+            onCharacterIsLetter();
+        }
+        if (operate('^')) {
+            onOperatePow();
+        }
+    }
+
+    private void onOperatePow() {
+        number = Math.pow(number, parseFactor());
+    }
+
+    private void onOperateOpenBracket() {
+        number = parseExpression();
+        operate(')');
+    }
+
+    private void onCharacterIsLetter() {
+        while (Character.isLetter(character)) {
+            nextChar();
+        }
+        number = parseFactor();
+    }
+
+    private void onCharacterIsDigit() {
+        while (Character.isDigit(character)) {
+            nextChar();
+        }
+        number = findParsedNumber();
+    }
+
+    private double findParsedNumber() {
+        return Double.parseDouble(expression.substring(startPos, this.position));
     }
 }
